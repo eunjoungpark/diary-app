@@ -1,0 +1,38 @@
+/*base *****************************************************/
+html, body {width:100%;}
+html {overflow-y:scroll;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, textarea, button, p, table, th, td {padding:0; margin:0;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {display:block; padding:0; margin:0;}
+table, th, td, input, button {font-size:12px;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal; font-size:100%;}
+table {border-collapse:collapse; border-spacing:0; empty-cells:show; border:0 none;}
+li {list-style:none;}
+form, fieldset, iframe, button {border:0 none;}
+label {cursor:pointer; vertical-align:middle;}
+img {border:0 none; vertical-align:top;}
+address, caption, em {font-weight:normal; font-style:normal;}
+hr {display:none;}
+select, input, option, textarea {vertical-align:middle; font:12px, "돋움", Dotum, sans-serif; color:#666;}
+input, select, button{vertical-align:middle;}
+button {overflow:visible; background:transparent; cursor:pointer;}
+button::-moz-focus-inner {padding:0; border:0;}
+.clear {zoom:1;}
+.clear:after {content:""; display:block; height:0; clear:both;}
+.skip, .blind, legend {position:absolute !important; top:-5000em; width:0; height:0; overflow:hidden; line-height:0; font-size:0;}
+body {font:12px "돋움", Dotum, sans-serif; color:#666;}
+input[type=text]::-ms-clear {display:none;}
+label, button {font-family:"돋움", Dotum, sans-serif;}
+/* Anchor
+-------------------------------------------------------------------------- */
+a,
+a:link,
+a:visited {color:#666; text-decoration:none;}
+a:hover,
+a:active,
+a:focus {color:#39f;}
+
+
+/* Layout *****************************************************************/
+.el-header {background:yellow;}
+.el-aside {background-color:blue;}
+.el-aside + .el-container {background-color:green;}
