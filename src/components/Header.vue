@@ -1,12 +1,22 @@
 <template>
   <el-header>
-    sdfsdfsdf
+    <h1 class="logo"><router-link to="/" extact><img src="../assets/logo.png" alt="" />Z<span>za</span><span>ng</span><span>suni's</span> Diary</router-link></h1>
+    <appSearch></appSearch>
+    <div class="top-menu">
+      <ul>
+        <router-link tag="li" to="/login"><a>Login</a></router-link>
+        <router-link tag="li" to="/mypage"><a>eunjoungpark</a></router-link>
+      </ul>
+    </div>
   </el-header>
 </template>
 
 <script>
+import Search from './Search.vue';
 export default {
-
+  components : {
+    appSearch : Search
+  }
 }
 </script>
 

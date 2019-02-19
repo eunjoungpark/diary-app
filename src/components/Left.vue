@@ -1,5 +1,5 @@
 <template>
-    <el-aside width="200px">Aside</el-aside>
+    <el-aside id="nav">Aside</el-aside>
 </template>
 
 <script>

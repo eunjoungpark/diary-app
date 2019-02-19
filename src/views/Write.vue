@@ -1,14 +1,12 @@
 <template>
-    <el-container>
-        <router-view></router-view>
-    </el-container>
+    <div>
+        write
+    </div>
 </template>
 
 <script>
-
-
 export default {
-   
+
 }
 </script>
 

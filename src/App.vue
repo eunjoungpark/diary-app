@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <el-conainer>
+    <el-container id="wrapper">
       <Header></Header>
       <el-container>
         <Container></Container>
       </el-container>
-    </el-conainer>
+    </el-container>
   </div>
 </template>
 

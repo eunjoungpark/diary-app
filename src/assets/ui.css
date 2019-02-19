@@ -1,8 +1,8 @@
 /*base *****************************************************/
-html, body {width:100%;}
+html, body {width:100%; height:100%;}
 html {overflow-y:scroll;}
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, textarea, button, p, table, th, td {padding:0; margin:0;}
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {display:block; padding:0; margin:0;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, textarea, button, p, table, th, td {padding:0; margin:0; box-sizing:border-box;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {display:block; padding:0; margin:0; box-sizing:border-box;}
 table, th, td, input, button {font-size:12px;}
 h1, h2, h3, h4, h5, h6 {font-weight:normal; font-size:100%;}
 table {border-collapse:collapse; border-spacing:0; empty-cells:show; border:0 none;}
@@ -12,8 +12,9 @@ label {cursor:pointer; vertical-align:middle;}
 img {border:0 none; vertical-align:top;}
 address, caption, em {font-weight:normal; font-style:normal;}
 hr {display:none;}
-select, input, option, textarea {vertical-align:middle; font:12px, "돋움", Dotum, sans-serif; color:#666;}
+select, input, option, textarea {vertical-align:middle; font:12px, "굴림", gulim, "돋움", Dotum, sans-serif; color:#666;}
 input, select, button{vertical-align:middle;}
+input {height:30px; border:1px solid #ededed;}
 button {overflow:visible; background:transparent; cursor:pointer;}
 button::-moz-focus-inner {padding:0; border:0;}
 .clear {zoom:1;}
@@ -33,6 +34,27 @@ a:focus {color:#39f;}
 
 
 /* Layout *****************************************************************/
-.el-header {background:yellow;}
-.el-aside {background-color:blue;}
-.el-aside + .el-container {background-color:green;}
+#app {width:960px; height:100%; margin:0 auto;}
+#wrapper {position:relative; padding-top:60px;}
+.el-container {height:100%;}
+.el-header {position:absolute; top:0; left:0; right:0; background-color:#d77869;}
+.el-header:after {clear:both; display:block; content:""; height:0; overflow:hidden;}
+.el-aside {height:100%; padding:20px 15px; border-right:1px solid #a37863;}
+
+
+/* header */
+.el-header a {color:#fff;}
+.el-header h1 {float:left;}
+.logo {margin-right:60px;}
+.logo a {font-weight:bold; font-size:21px; font-family:tahoma; line-height:60px;}
+.logo img {width:60px; margin-top:-2px; vertical-align:middle;}
+.logo img + span {font-size:18px;}
+.logo img + span + span {font-size:16px;}
+.logo img + span + span + span {font-size:14px;}
+.search-bx {float:left; margin-top:13px; width:400px; padding-left:10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
+.search-bx input[type="text"] {width:350px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
+.search-bx .btn-search i {font-size:20px; color:#ccc;}
+.top-menu {float:right;}
+.top-menu li {float:left; padding:10px 0;}
+.top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff;}
+.top-menu li a:hover {text-decoration:underline;}

@@ -1,14 +1,15 @@
 <template>
     <el-container>
-        <List></List>
+        <Left></Left>
+        <router-view></router-view>
     </el-container>
 </template>
 
 <script>
-import List from '../views/List.vue';
+import Left from '../components/Left.vue';
 export default {
     components : {
-        List
+        Left
     }
 }
 </script>
