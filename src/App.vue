@@ -2,9 +2,7 @@
   <div id="app">
     <el-container id="wrapper">
       <Header></Header>
-      <el-container>
-        <Container></Container>
-      </el-container>
+      <Container></Container>
     </el-container>
   </div>
 </template>

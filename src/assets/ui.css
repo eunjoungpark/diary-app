@@ -12,7 +12,7 @@ label {cursor:pointer; vertical-align:middle;}
 img {border:0 none; vertical-align:top;}
 address, caption, em {font-weight:normal; font-style:normal;}
 hr {display:none;}
-select, input, option, textarea {vertical-align:middle; font:12px, "굴림", gulim, "돋움", Dotum, sans-serif; color:#666;}
+select, input, option, textarea {vertical-align:middle; font:12px 'Nanum Pen Script'"굴림", gulim, "돋움", Dotum, sans-serif; color:#666;}
 input, select, button{vertical-align:middle;}
 input {height:30px; border:1px solid #ededed;}
 button {overflow:visible; background:transparent; cursor:pointer;}
@@ -20,9 +20,9 @@ button::-moz-focus-inner {padding:0; border:0;}
 .clear {zoom:1;}
 .clear:after {content:""; display:block; height:0; clear:both;}
 .skip, .blind, legend {position:absolute !important; top:-5000em; width:0; height:0; overflow:hidden; line-height:0; font-size:0;}
-body {font:12px "돋움", Dotum, sans-serif; color:#666;}
+body {font:12px 'Nanum Pen Script', "돋움", Dotum, sans-serif; color:#666;}
 input[type=text]::-ms-clear {display:none;}
-label, button {font-family:"돋움", Dotum, sans-serif;}
+label, button {font-family:'Nanum Pen Script', "돋움", Dotum, sans-serif;}
 /* Anchor
 -------------------------------------------------------------------------- */
 a,
@@ -34,7 +34,7 @@ a:focus {color:#39f;}
 
 
 /* Layout *****************************************************************/
-#app {width:960px; height:100%; margin:0 auto;}
+#app {width:600px; height:100%; margin:0 auto;}
 #wrapper {position:relative; padding-top:60px;}
 .el-container {height:100%;}
 .el-header {position:absolute; top:0; left:0; right:0; background-color:#d77869;}
@@ -45,16 +45,24 @@ a:focus {color:#39f;}
 /* header */
 .el-header a {color:#fff;}
 .el-header h1 {float:left;}
-.logo {margin-right:60px;}
-.logo a {font-weight:bold; font-size:21px; font-family:tahoma; line-height:60px;}
-.logo img {width:60px; margin-top:-2px; vertical-align:middle;}
+.logo {margin-right:30px;}
+.logo a {font-weight:bold; font-size:21px; font-family:'Pacifico'; line-height:50px;}
+.logo img {width:60px; margin-top:10px; vertical-align:top;}
 .logo img + span {font-size:18px;}
 .logo img + span + span {font-size:16px;}
 .logo img + span + span + span {font-size:14px;}
-.search-bx {float:left; margin-top:13px; width:400px; padding-left:10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
-.search-bx input[type="text"] {width:350px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
+.search-bx {float:left; margin-top:13px; width:250px; padding-left:10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
+.search-bx input[type="text"] {width:200px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
 .search-bx .btn-search i {font-size:20px; color:#ccc;}
 .top-menu {float:right;}
-.top-menu li {float:left; padding:10px 0;}
-.top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff;}
-.top-menu li a:hover {text-decoration:underline;}
+.top-menu li {float:left; padding:6px 0;}
+.top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
+
+/* login */
+.login-container {width:100%; padding-top:30px;}
+.login-bx {width:400px; padding:50px; margin:0 auto; border:1px solid #e5e5e5;}
+.login-bx .input-bx {margin-bottom:10px;}
+.login-bx button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff; font-family:'Open Sans';}
+.login-bx button[class^="btn-"] svg {margin-right:5px; vertical-align:-2px;}
+.btn-google {background-color:#ea4335;}
+.btn-facebook {background-color:#4267b2;}

@@ -16,17 +16,11 @@ export default new Router({
       path: '/',
       component : Contents,
       children : [
-        {component: List, path: '/list'},
+        {component: List, path: '/'},
         {component: View, path: '/view'},
         {component: Write, path: '/write'}
       ]
     },
-    ,
-    // {
-    //   path:'/',
-    //   name : 'list',
-    //   component : List,
-    // },
     {
       path:'/login',
       name : 'login',
