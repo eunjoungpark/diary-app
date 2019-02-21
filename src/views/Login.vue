@@ -1,5 +1,5 @@
 <template>
-    <div class="login-container">
+    <section class="login-container">
         <div class="login-bx">
             <fieldset>
                 <legend>로그인 입력폼</legend>
@@ -9,14 +9,12 @@
                 <div class="btn-bx"><button type="button" class="btn-facebook"><icon name="brands/facebook"></icon>Log in width Facebook</button></div>
             </fieldset>
         </div>
-    </div>
+    </section>
 </template>
 <script>
-import Icon from 'vue-awesome/components/Icon'
+
 export default {
-    components : {
-        Icon
-    }
+    
 }
 //emotion
 //angry : 화남
@@ -28,28 +26,5 @@ export default {
 </script>
 
 <style>
-.el-row {
-    margin-bottom: 20px;
-  }
-    .el-row:last-child {margin-bottom: 0;}
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
+
 </style>

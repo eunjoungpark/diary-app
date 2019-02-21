@@ -1,5 +1,5 @@
 <template>
-  <el-header>
+  <header id="header" class="clear">
     <h1 class="logo"><router-link to="/" extact><img src="../assets/logo.png" alt="" /><sup>'s</sup> Diary</router-link></h1>
     <appSearch></appSearch>
     <div class="top-menu">
@@ -8,7 +8,7 @@
         <!-- <router-link tag="li" to="/mypage"><a>eunjoungpark</a></router-link> -->
       </ul>
     </div>
-  </el-header>
+  </header>
 </template>
 
 <script>

@@ -12,7 +12,7 @@ label {cursor:pointer; vertical-align:middle;}
 img {border:0 none; vertical-align:top;}
 address, caption, em {font-weight:normal; font-style:normal;}
 hr {display:none;}
-select, input, option, textarea {vertical-align:middle; font:12px 'Nanum Pen Script'"굴림", gulim, "돋움", Dotum, sans-serif; color:#666;}
+select, input, option, textarea {vertical-align:middle; font:12px 'Noto Sans KR', "돋움", Dotum, sans-serif; color:#666;}
 input, select, button{vertical-align:middle;}
 input {height:30px; border:1px solid #ededed;}
 button {overflow:visible; background:transparent; cursor:pointer;}
@@ -20,9 +20,9 @@ button::-moz-focus-inner {padding:0; border:0;}
 .clear {zoom:1;}
 .clear:after {content:""; display:block; height:0; clear:both;}
 .skip, .blind, legend {position:absolute !important; top:-5000em; width:0; height:0; overflow:hidden; line-height:0; font-size:0;}
-body {font:12px 'Nanum Pen Script', "돋움", Dotum, sans-serif; color:#666;}
+body {font:14px 'Noto Sans KR', "돋움", Dotum, sans-serif; color:#666;}
 input[type=text]::-ms-clear {display:none;}
-label, button {font-family:'Nanum Pen Script', "돋움", Dotum, sans-serif;}
+label, button {font-family:'Noto Sans KR', "돋움", Dotum, sans-serif; color:#666;}
 /* Anchor
 -------------------------------------------------------------------------- */
 a,
@@ -30,24 +30,28 @@ a:link,
 a:visited {color:#666; text-decoration:none;}
 a:hover,
 a:active,
-a:focus {color:#39f;}
+a:focus {color:#d7604e;}
 
+/* icon */
+.btn-more {width:25px; height:25px; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center;}
+.btn-more:hover {background-color:#d7604e; color:#fff; border:1px solid #d7604e;}
 
 /* Layout *****************************************************************/
-#app {width:600px; height:100%; margin:0 auto;}
+#app {width:600px; margin:0 auto;}
 #wrapper {position:relative; padding-top:60px;}
-.el-container {height:100%;}
-.el-header {position:absolute; top:0; left:0; right:0; background-color:#d77869;}
-.el-header:after {clear:both; display:block; content:""; height:0; overflow:hidden;}
-.el-aside {height:100%; padding:20px 15px; border-right:1px solid #a37863;}
+#slot-wrap {border:1px solid #a8a8a8; border-top:0;}
+#container {position:relative; padding-left:40px;}
+.contents-wrap {min-height:300px; padding:20px;}
+#header {position:absolute; top:0; left:0; right:0; height:60px; padding:0 10px; background-color:#d77869;}
+#nav {position:absolute; top:0; left:0; width:40px; height:100%; padding:20px 0 20px 7px; overflow:hidden; background-color:#666666;}
 
 
 /* header */
-.el-header a {color:#fff;}
-.el-header h1 {float:left;}
+#header a {color:#fff;}
+#header h1 {float:left;}
 .logo {margin-right:30px;}
 .logo a {font-weight:bold; font-size:21px; font-family:'Pacifico'; line-height:50px;}
-.logo img {width:60px; margin-top:10px; vertical-align:top;}
+.logo img {width:50px; margin-top:10px; vertical-align:top;}
 .logo img + span {font-size:18px;}
 .logo img + span + span {font-size:16px;}
 .logo img + span + span + span {font-size:14px;}
@@ -58,11 +62,39 @@ a:focus {color:#39f;}
 .top-menu li {float:left; padding:6px 0;}
 .top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
 
+/* nav */
+#nav ul {width:130px;}
+#nav ul li {position:relative; height:35px; margin-bottom:10px;}
+#nav ul li a {position:absolute; left:0; top:0; padding:5px; color:#fff; line-height:1; z-index:10;}
+#nav ul li a svg {margin-right:13px; vertical-align:middle;}
+#nav ul li a .nav-label {vertical-align:middle;}
+#nav ul li a:hover::before {position:absolute; left:-10px; top:13px; content:""; border-left:5px solid #fff; border-top:4px solid transparent; border-bottom:4px solid transparent;}
+#nav .nav-icon01.on a {color:#32ca44;}
+
 /* login */
-.login-container {width:100%; padding-top:30px;}
+.login-container {width:100%; padding:30px 0 50px 0;}
 .login-bx {width:400px; padding:50px; margin:0 auto; border:1px solid #e5e5e5;}
 .login-bx .input-bx {margin-bottom:10px;}
-.login-bx button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff; font-family:'Open Sans';}
+.login-bx button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff;}
 .login-bx button[class^="btn-"] svg {margin-right:5px; vertical-align:-2px;}
 .btn-google {background-color:#ea4335;}
 .btn-facebook {background-color:#4267b2;}
+
+/* list-wrap */
+.no-data {padding:10px; border:1px dashed #a8a8a8; text-align:center; border-radius:10px; }
+.no-data button {width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px;}
+
+.list-bx .list-cell {margin-bottom:10px; border:1px solid #a8a8a8;}
+.list-bx .list-img {float:left;}
+.list-bx .list-img img {display:block; width:130px; height:130px;}
+.list-bx .list-cont {position:relative; padding:20px 50px 20px 150px;}
+.list-bx .list-cont .tit {margin-bottom:10px;}
+.list-bx .list-cont .tit a {font-weight:bold; color:#000; font-size:21px;}
+.list-bx .list-cont .tit a:hover {text-decoration:underline;}
+.list-bx .list-cont .txt {margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.list-bx .list-cont .date {color:#ababab;}
+.list-bx .list-cont .list-func {position:absolute; top:22px; right:20px;}
+.list-bx .list-cont .list-func ul {display:none;margin-top:5px;}
+.list-bx .list-cont .list-func ul li {margin-bottom:5px;}
+.list-bx .list-cont .list-func ul li a {font-size:13px;}
+.list-bx .list-cont .btn-more:hover + ul {display:block; position:relative; right:-10px;}

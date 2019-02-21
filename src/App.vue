@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <el-container id="wrapper">
+    <section id="wrapper">
       <Header></Header>
       <Container></Container>
-    </el-container>
+    </section>
   </div>
 </template>
 

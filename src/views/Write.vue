@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <section class="contents-wrap write-wrap">
         write
-    </div>
+    </section>
 </template>
 
 <script>

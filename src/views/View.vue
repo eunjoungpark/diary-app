@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <section class="contents-wrap view-wrap">
         view
-    </div>
+    </section>
 </template>
 
 <script>

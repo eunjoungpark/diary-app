@@ -1,7 +1,8 @@
 <template>
-    <el-container>
+    <section id="slot-wrap">
+        <h2 class="skip">컨텐츠 영역</h2>
         <router-view></router-view>
-    </el-container>
+    </section>
 </template>
 
 <script>

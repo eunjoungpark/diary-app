@@ -1,8 +1,8 @@
 <template>
-    <el-container>
+    <section id="container">
         <Left></Left>
         <router-view></router-view>
-    </el-container>
+    </section>
 </template>
 
 <script>
