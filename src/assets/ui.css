@@ -95,8 +95,6 @@ a:focus {color:#d7604e;}
 .list-bx .list-cont .tit a:hover {text-decoration:underline;}
 .list-bx .list-cont .txt {margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .list-bx .list-cont .date {color:#ababab;}
-.list-bx .list-cont .list-func {position:absolute; top:22px; right:20px;}
-.list-bx .list-cont .list-func ul {display:none;margin-top:5px;}
-.list-bx .list-cont .list-func ul li {margin-bottom:5px;}
-.list-bx .list-cont .list-func ul li a {font-size:13px;}
-.list-bx .list-cont .btn-more:hover + ul {display:block; position:relative; right:-10px;}
+.list-bx .list-cont .list-func {position:absolute; bottom:5px; right:10px;}
+.list-bx .list-cont .list-func button {margin-left:5px;}
+
