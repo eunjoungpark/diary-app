@@ -16,8 +16,8 @@
             <dd class="date">2019.02.20 14:25</dd>
           </dl>
           <div class="list-func">
-            <button type="button" class="btn-more"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
-            <button type="button" class="btn-more"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
+            <button type="button" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
+            <button type="button" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
           </div>
         </div>
       </div>
@@ -30,8 +30,8 @@
             <dd class="date">2019.02.20 14:25</dd>
           </dl>
           <div class="list-func">
-            <button type="button" class="btn-more"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
-            <button type="button" class="btn-more"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
+            <button type="button" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
+            <button type="button" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
           </div>
         </div>
       </div>
