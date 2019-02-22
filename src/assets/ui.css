@@ -127,6 +127,9 @@ a:focus {color:#d7604e;}
 .view-bx .view-cont .map {margin-top:50px;}
 
 /* element.io style */
+.el-form-item .el-form-item__label {width:80px !important; text-align:center !important;}
+.el-form-item .el-form-item__content {margin-left:80px !important;}
+.el-form-item .el-textarea__inner {min-height:300px !important;}
 
 /* google map */
 .vue-map-container {width:478px; height:300px;}
