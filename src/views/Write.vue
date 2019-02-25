@@ -29,7 +29,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="날씨" prop="weather" class="radio-weather">
-                    <el-radio-group v-model="form.emotion">
+                    <el-radio-group v-model="form.weather">
                         <el-radio label="sun" class="weather-color02"><icon name="sun" scale="1.3" /> <span class="label">맑음</span></el-radio>
                         <el-radio label="cloud" class="weather-color03"><icon name="cloud" scale="1.3" /> <span class="label">구름</span></el-radio>
                         <el-radio label="cloud-showers-heavy" class="weather-color03"><icon name="cloud-showers-heavy" scale="1.3" /> <span class="label">비</span></el-radio>
@@ -50,16 +50,18 @@
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="지도">
-                    <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
-                    <Gmap-Map class="map" :zoom="16" :center="center" @click="mapClick()">
-                        <Gmap-Marker v-for="(marker, index) in markers"
-                            :key="index"
-                            :position="marker.position"
-                            @click="findPlace()"
-                            :clickable="true"
-                            :draggable="true"
-                            ></Gmap-Marker>
-                    </Gmap-Map>
+                    <div class="map">
+                        <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
+                        <Gmap-Map :zoom="16" :center="center" @click="mapClick()">
+                            <Gmap-Marker v-for="(marker, index) in markers"
+                                :key="index"
+                                :position="marker.position"
+                                @click="findPlace()"
+                                :clickable="true"
+                                :draggable="true"
+                                ></Gmap-Marker>
+                        </Gmap-Map>
+                    </div>
                 </el-form-item>
             </el-form>
         </div>
@@ -78,11 +80,18 @@ export default {
                 region : "",
                 date1 : "",
                 date2 : "",
-                emotion : ""
+                emotion : "",
+                weather : ""
             },
-            center : {lat: 0, lng: 0},
-            markers: [],
-            place : null
+            center : {lat: 37.5001823, lng: 127.0078127},
+            markers: [{
+                position: {
+                    lat: 37.5001823,
+                    lng: 127.0078127
+                }
+            }],
+            place : null,
+            fileList2 : []
         }
     },
     components : {
@@ -120,6 +129,12 @@ export default {
                 this.center.lng = _lng;
                 this.place = null;
             }
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
         }
     }
 }

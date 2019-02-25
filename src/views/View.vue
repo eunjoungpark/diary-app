@@ -48,7 +48,7 @@
                 <!-- 작성글 //-->
                 <!--// 지도 -->
                 <div class="map">
-                    <google-map :center="center" :zoom="15">
+                    <google-map :center="center" :zoom="16">
                         <google-marker v-for="(m,idx) in markers" :position="m.position" :clickable="true" :draggable="true" @click="center=m.position" :key="idx"></google-marker>
                     </google-map>
                 </div>
@@ -64,8 +64,8 @@ export default {
     data (){
         return {
             center: {
-            lat: 37.5001823,
-            lng: 127.0078127
+                lat: 37.5001823,
+                lng: 127.0078127
             },
             markers: [{
                 position: {

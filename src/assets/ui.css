@@ -134,6 +134,10 @@ a:focus {color:#d7604e;}
 .write-bx .el-form-item .el-form-item__content {margin-left:80px;}
 .write-bx .el-form-item .el-textarea__inner {min-height:200px !important;}
 .write-bx .el-col-2 {text-align:center;}
-.write-bx .map {margin-top:10px; width:438px; height:300px;}
+.write-bx .map .vue-map-container {width:438px; margin-top:10px;}
+
+/* .vue-map-container */
+.vue-map-container {width:478px; height:300px;}
+
 
 
