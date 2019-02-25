@@ -8,6 +8,7 @@ import './plugins/element.js'
 import Icon from 'vue-awesome/components/Icon'
 import Vuelidate from 'vuelidate'
 import * as VueGoogleMaps from 'vue2-google-maps'
+//import firebase from "firebase"
 
 Vue.use(VueGoogleMaps, {
   load: {
