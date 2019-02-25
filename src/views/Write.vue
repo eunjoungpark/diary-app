@@ -2,7 +2,7 @@
     <section class="contents-wrap write-wrap">
         <h3 class="skip">작성</h3>
         <div class="write-bx">
-            <el-form ref="form" :model="form" label-width="120px">
+            <el-form ref="form" :model="form">
                 <el-form-item label="제목">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
@@ -19,55 +19,49 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item label="기분" prop="emotion">
-                    <el-radio-group v-model="form.emotion">
-                        <el-radio label="화남"><icon name="angry" scale="1.3" /></el-radio>
-                        <el-radio label="눈물"><icon name="sad-cry" scale="1.3" /></el-radio>
-                        <el-radio label="짜증"><icon name="frown" scale="1.3" /></el-radio>
-                        <el-radio label="기쁨"><icon name="grin-beam" scale="1.3" /></el-radio>
-                        <el-radio label="놀람"><icon name="surprise" scale="1.3" /></el-radio>
-                        <el-radio label="평범"><icon name="smile" scale="1.3" /></el-radio>
+                    <el-radio-group v-model="form.emotion" class="radio-emotion">
+                        <el-radio label="angry" class="emotion-color01"><icon name="angry" scale="1.3" /> <span class="label">화남</span></el-radio>
+                        <el-radio label="sad-cry" class="emotion-color01"><icon name="sad-cry" scale="1.3" /> <span class="label">슬픔</span></el-radio>
+                        <el-radio label="frown" class="emotion-color01"><icon name="frown" scale="1.3" /> <span class="label">짜증</span></el-radio>
+                        <el-radio label="grin-beam" class="emotion-color01"><icon name="grin-beam" scale="1.3" /> <span class="label">행복</span></el-radio>
+                        <el-radio label="surprise" class="emotion-color01"><icon name="surprise" scale="1.3" /> <span class="label">놀람</span></el-radio>
+                        <el-radio label="smile" class="emotion-color01"><icon name="smile" scale="1.3" /> <span class="label">평범</span></el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="날씨" prop="emotion">
+                <el-form-item label="날씨" prop="weather" class="radio-weather">
                     <el-radio-group v-model="form.emotion">
-                        <el-radio label="맑음"><icon name="sun" scale="1.3" class="weather-color02" /></el-radio>
-                        <el-radio label="구름"><icon name="cloud" scale="1.3" class="weather-color03" /></el-radio>
-                        <el-radio label="비"><icon name="cloud-showers-heavy" class="weather-color03" scale="1.3" /></el-radio>
-                        <el-radio label="눈"><icon name="snowflake" scale="1.3" class="weather-color01" /></el-radio>
-                        <el-radio label="바람"><icon name="wind" scale="1.3" class="weather-color04" /></el-radio>
+                        <el-radio label="sun" class="weather-color02"><icon name="sun" scale="1.3" /> <span class="label">맑음</span></el-radio>
+                        <el-radio label="cloud" class="weather-color03"><icon name="cloud" scale="1.3" /> <span class="label">구름</span></el-radio>
+                        <el-radio label="cloud-showers-heavy" class="weather-color03"><icon name="cloud-showers-heavy" scale="1.3" /> <span class="label">비</span></el-radio>
+                        <el-radio label="snowflake" class="weather-color01"><icon name="snowflake" scale="1.3" /> <span class="label">눈</span></el-radio>
+                        <el-radio label="wind" class="weather-color04"><icon name="wind" scale="1.3" /> <span class="label">바람</span></el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit">Create</el-button>
-                    <el-button>Cancel</el-button>
+                <el-form-item label="이미지">
+                    <el-upload
+                        class="upload-demo"
+                        action="http://localhost:8080/uploads/"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :file-list="fileList2"
+                        list-type="picture">
+                        <el-button size="small" type="primary">Click to upload</el-button>
+                        <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="지도">
+                    <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
+                    <Gmap-Map class="map" :zoom="16" :center="center" @click="mapClick()">
+                        <Gmap-Marker v-for="(marker, index) in markers"
+                            :key="index"
+                            :position="marker.position"
+                            @click="findPlace()"
+                            :clickable="true"
+                            :draggable="true"
+                            ></Gmap-Marker>
+                    </Gmap-Map>
                 </el-form-item>
             </el-form>
-            <gmap-autocomplete placeholder="This is a placeholder text" @place_changed="setPlace"></gmap-autocomplete>
-        <!-- <button @click="usePlace">Add</button> -->
-        <!-- <GmapMap :center="center" :zoom="15" map-type-id="terrain" style="width: 500px; height: 300px">
-            <gmap-marker v-for="m in markers" :position="{lat: m.position[0], lng: m.position[1]}" :key="m.position[0]+m.position[1]" :clickable="true" :draggable="true" @click="center = m.position" @mouseover="statusText = m.text" @mouseout="statusText = null"></gmap-marker>
-        </GmapMap> -->
-         <!--  -->
-
-        <Gmap-Map style="width: 600px; height: 300px;" :zoom="15" :center="center" @click="mapClick()">
-            <Gmap-Marker v-for="(marker, index) in markers"
-                :key="index"
-                :position="marker.position"
-                @click="findPlace()"
-                :clickable="true"
-                :draggable="true"
-                ></Gmap-Marker>
-        </Gmap-Map>
-            <!-- <Gmap-Marker
-                @click="center=markers.position"
-                v-if="this.place"
-                label="&#x2605;"
-                
-                :position="{
-                    lat: this.place.geometry.location.lat(),
-                    lng: this.place.geometry.location.lng(),
-                }"
-                ></Gmap-Marker> -->
         </div>
     </section>
 </template>

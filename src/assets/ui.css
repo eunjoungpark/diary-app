@@ -37,11 +37,11 @@ a:focus {color:#d7604e;}
 -------------------------------------------------------------------------- */
 .btn-ico {width:25px; height:25px; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center;}
 .btn-ico:hover {background-color:#d7604e; color:#fff; border:1px solid #d7604e;}
-.emotion-color01 {color:#fdf402;}
-.weather-color01 {color:#b1e4f5;}
-.weather-color02 {color:#f7a515;}
-.weather-color03 {color:#aba9a5;}
-.weather-color04 {color:#02bffd;}
+.emotion-color01, .emotion-color01 > * {color:#fdd102;}
+.weather-color01, .weather-color01 > * {color:#b1e4f5;}
+.weather-color02, .weather-color02 > * {color:#f7a515;}
+.weather-color03, .weather-color03 > * {color:#aba9a5;}
+.weather-color04, .weather-color04 > * {color:#02bffd;}
 
 /* Layout 
 -------------------------------------------------------------------------- */
@@ -117,8 +117,7 @@ a:focus {color:#d7604e;}
 .view-bx .view-head {padding:20px; background-color:#f7f7f7;}
 .view-bx .view-head .tit {margin-bottom:10px; font-size:21px; color:#000;}
 .view-bx .view-head .status .emotion svg, .view-bx .view-head .status .weather svg {margin-right:5px;}
-.view-bx .view-head .status .emotion {float:left; color:#fdd102;}
-.view-bx .view-head .status .weather {float:left;}
+.view-bx .view-head .status .emotion, .view-bx .view-head .status .weather {float:left;}
 .view-bx .view-head .status .date {float:left; margin-right:10px;}
 .view-bx .view-head .view-func {float:left; margin-top:-3px;}
 .view-bx .view-head .btn-ico {margin-right:5px; background-color:#fff;}
@@ -127,9 +126,14 @@ a:focus {color:#d7604e;}
 .view-bx .view-cont .map {margin-top:50px;}
 
 /* element.io style */
-.el-form-item .el-form-item__label {width:80px !important; text-align:center !important;}
-.el-form-item .el-form-item__content {margin-left:80px !important;}
-.el-form-item .el-textarea__inner {min-height:300px !important;}
+.write-bx .el-radio {margin-right:20px; text-align:center; white-space:normal;}
+.write-bx .el-radio__input {position:absolute; left:0; opacity:0;}
+.write-bx .el-radio__label {padding:0;}
+.write-bx .el-radio__label .label {display:block; margin-top:3px; color:#bababa;}
+.write-bx .el-form-item .el-form-item__label {width:80px; text-align:center;}
+.write-bx .el-form-item .el-form-item__content {margin-left:80px;}
+.write-bx .el-form-item .el-textarea__inner {min-height:200px !important;}
+.write-bx .el-col-2 {text-align:center;}
+.write-bx .map {margin-top:10px; width:438px; height:300px;}
 
-/* google map */
-.vue-map-container {width:478px; height:300px;}
+

@@ -6,12 +6,12 @@
                 <p class="tit">양재꽃시장 다녀온날 양재꽃시장 다녀온날양재꽃시장 다녀온날 양재꽃시장 다녀온날양재꽃시장 다녀온날 양재꽃시장 다녀온날</p>
                 <div class="status clear">
                     <p class="emotion">
-                        <icon name="angry" scale="1.3" />
-                        <icon name="sad-cry" scale="1.3" />
-                        <icon name="frown" scale="1.3" />
-                        <icon name="grin-beam" scale="1.3" />
-                        <icon name="surprise" scale="1.3" />
-                        <icon name="smile" scale="1.3" />
+                        <icon name="angry" scale="1.3" class="emotion-color01" />
+                        <icon name="sad-cry" scale="1.3" class="emotion-color01" />
+                        <icon name="frown" scale="1.3" class="emotion-color01" />
+                        <icon name="grin-beam" scale="1.3" class="emotion-color01" />
+                        <icon name="surprise" scale="1.3" class="emotion-color01" />
+                        <icon name="smile" scale="1.3" class="emotion-color01" />
                     </p>
                     <p class="weather">
                         <icon name="cloud" scale="1.3" class="weather-color03" />
