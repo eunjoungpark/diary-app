@@ -1,56 +1,93 @@
 <template>
     <section class="login-container">
         <div class="login-bx">
-            <fieldset>
-                <legend>로그인 입력폼</legend>
-                <div class="input-bx"><el-input placeholder="Email Address" id="user-email" v-model="email" @input="userLogin()"></el-input><label class="skip" for="user-email">email</label></div>
-                <el-alert title="필수입력 항목입니다." type="warning" v-if="!emailRequire"></el-alert>
-                <el-alert title="메일 형식이 아닙니다." type="error" v-if="!$v.email.email"></el-alert>
-                <div class="input-bx"><el-input placeholder="Password" id="user-password" v-model="password"></el-input><label class="skip" for="user-password">password</label></div>
-                <el-alert title="메일 형식이 아닙니다." type="error" v-if="!$v.email.email"></el-alert>
-                <div class="btn-bx"><button type="button" class="btn-login" @click="userLogin()">Login</button></div>
-                <div class="btn-bx"><button type="button" class="btn-google"><icon name="brands/google"></icon>Log in width Google</button></div>
-                <div class="btn-bx"><button type="button" class="btn-facebook"><icon name="brands/facebook"></icon>Log in width Facebook</button></div>
-                <div class="btn-bx"><button type="button" class="btn-join">Sign Up</button></div>
-
-                {{$v.password}}
-            </fieldset>
+            <form @submit.prevent="userLogin()">
+                <fieldset>
+                    <legend>로그인 입력폼</legend>
+                    <div class="input-bx">
+                        <el-input placeholder="이메일 주소입력" id="user-email" v-model="userEmail" @input="checkEmail()"></el-input><label class="skip" for="user-email">email</label>
+                        <el-alert title="필수입력 항목입니다." type="warning" v-if="!emailRequire"></el-alert>
+                        <el-alert title="메일 형식이 아닙니다." type="error" v-if="!$v.userEmail.email"></el-alert>
+                    </div>                
+                    <div class="input-bx">
+                        <el-input placeholder="비밀번호 입력" id="user-password" type="password" autocomplete="off" v-model="userPasswd" @input="checkPasswd()"></el-input><label class="skip" for="user-password">password</label>
+                        <el-alert title="필수입력 항목입니다." type="warning" v-if="!passwordRequire"></el-alert>
+                        <el-alert title="비밀번호는 6자 이상의 대소문자(특수문자 !@#$%^ 허용)와 2자이상의 숫자로 입력해주세요." type="error" v-if="!$v.userPasswd.passwdRegex"></el-alert>
+                        <el-alert title="영문 대소문자와 숫자만 입력할 수 있습니다." type="error" v-if="!$v.userPasswd.alphaNum"></el-alert>
+                    </div>
+                    <div class="btn-bx"><button type="submit" class="btn-login">Login</button></div>
+                    <div class="btn-bx"><button type="button" class="btn-google" @click="googleLogin()"><icon name="brands/google"></icon>Log in width Google</button></div>
+                    <div class="btn-bx"><button type="button" class="btn-facebook" @click="facebookLogin()"><icon name="brands/facebook"></icon>Log in width Facebook</button></div>
+                    <div class="etc-bx"><router-link to="/signup">Sign Up →</router-link></div>
+                </fieldset>
+            </form>
         </div>
     </section>
 </template>
 <script>
-//import firebaseDB from '../api/firebase'
-import {required, email, alphaNum, minLength} from 'vuelidate/lib/validators'
+import firebaseDB from '../rest/firebase'
+//var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+//var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+// if(!UserPassword.value.match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~,-])|([!,@,#,$,%,^,&,*,?,_,~,-].*[a-zA-Z0-9])/)) {
+//     alert("비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.");
+// return false;
+// }
+import {required, email, alphaNum, helpers} from 'vuelidate/lib/validators'
+const passwdRegex = helpers.regex('alphaNum', /^[\w!@#$%^]{6,15}.[0-9\d]{1,}$/); //비밀번호 정규식
 export default {
     data(){
         return {
-            email : "",
-            password : "",
-            joinRoot : "signup",
-            status : false,
-            emailRequire : true
-            
+            userEmail : "",
+            userPasswd : "",
+            emailRequire : true,
+            passwordRequire : true,
         }
     },
     validations : {
-        email : {
+        userEmail : {
             required,
             email
         },
-        password : {
+        userPasswd : {
             required,
-            alphaNum,
-            minLength : minLength(6)
+            passwdRegex,
+            alphaNum
         }
     },
     methods : {
-        userLogin (){
-            if(!this.$v.email.required) {
+        checkEmail (){
+            //메일주소
+            if(!this.$v.userEmail.required) {
                 this.emailRequire = false
             }else {
                 this.emailRequire = true
             }
-            //this.$store.dispatch("login", this.userData);
+        },
+        checkPasswd (){
+            //비밀번호
+            if(!this.$v.userPasswd.required) {
+                this.passwordRequire = false
+            }else {
+                this.passwordRequire = true
+            }
+        },
+        userLogin (){
+            // if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex && this.$v.userPasswd.alphaNum){
+            //     this.$store.dispatch('login', {userEmail:this.userEmail, userPasswd:this.userPasswd});
+            // }
+        },
+        googleLogin(){
+            console.log("google")
+           firebaseDB.post('',{
+                requestUri : "http://localhost",
+                postBody : 'id_token=894427736343-11ffjb88l416vhpntqn2vpm2rh63huke.apps.googleusercontent.com&providerId=google.com',
+                returnSecureToken : true,
+                returnIdpCredential : true
+           }).then(res=>{
+               console.log(res);
+           }).catch(error=>{
+               console.log(error);
+           });
         }
     }
 }

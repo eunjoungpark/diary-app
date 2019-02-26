@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Contents from './views/Contents.vue';
 import Login from './views/Login.vue'
+import Signup from './views/Signup.vue'
 import List from './views/List.vue'
 import View from './views/View.vue'
 import Write from './views/Write.vue'
@@ -23,8 +24,11 @@ export default new Router({
     },
     {
       path:'/login',
-      name : 'login',
       component : Login,
+    },
+    {
+      path:'/signup',
+      component : Signup,
     }      
   ]
 })

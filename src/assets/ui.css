@@ -81,14 +81,16 @@ a:focus {color:#d7604e;}
 /* #nav ul li a:hover::before {position:absolute; left:-10px; top:13px; content:""; border-left:5px solid #fff; border-top:4px solid transparent; border-bottom:4px solid transparent;} */
 #nav .nav-icon01.on a {color:#32ca44;}
 
-/* login 
+/* login & join
 -------------------------------------------------------------------------- */
 .login-container {width:100%; padding:30px 0 50px 0;}
 .login-bx {width:400px; padding:50px; margin:0 auto; border:1px solid #e5e5e5;}
 .login-bx .input-bx {margin-bottom:10px;}
-.login-bx .el-alert {margin-bottom:10px;}
+.login-bx .el-alert {margin-top:10px;}
 .login-bx button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff;}
 .login-bx button[class^="btn-"] svg {margin-right:5px; vertical-align:-2px;}
+.etc-bx {text-align:right;}
+.etc-bx a {color:#52adf3; text-decoration:underline;}
 .btn-login {border:1px solid #d7604e; color:#d7604e !important;}
 .btn-join {border:1px solid #333; color:#333 !important;}
 .btn-google {background-color:#ea4335;}
