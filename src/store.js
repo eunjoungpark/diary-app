@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebaseDB from './rest/firebase'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,15 @@ export default new Vuex.Store({
   },
   actions: {
     login({commit}, userData){
-      console.log(userData);
+      firebaseDB.post('/verifyPassword?key=AIzaSyDIXmxA1pMRLycwoiAVfhOroFGChAlhG7g',{
+        email : userData.userEmail,
+        password : userData.userPasswd,
+        returnSecureToken : true
+      }).then(res=>{
+          console.log(res);
+      }).catch(error=>{
+          console.log(error);
+      });
     },
     signUp(){
 
