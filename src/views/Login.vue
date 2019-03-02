@@ -14,7 +14,7 @@
                         <el-alert title="필수입력 항목입니다." type="warning" v-if="!passwordRequire"></el-alert>
                         <el-alert title="비밀번호는 6~12자 이상의 대소문자(특수문자 !@#$%^ 허용)와 2자이상의 숫자로 입력해주세요." type="error" v-if="!passwdRegexBool"></el-alert>
                     </div>
-                    <div class="btn-bx"><button type="submit" class="btn-login">Login</button></div>
+                    <div class="btn-bx"><button type="submit" class="btn-login" @click="userLogin()">Login</button></div>
                     <div class="btn-bx"><button type="button" class="btn-google" @click="googleLogin()"><icon name="brands/google"></icon>Log in width Google</button></div>
                     <div class="btn-bx"><button type="button" class="btn-facebook" @click="facebookLogin()"><icon name="brands/facebook"></icon>Log in width Facebook</button></div>
                     <div class="etc-bx"><router-link to="/signup">Sign Up →</router-link></div>
@@ -24,7 +24,6 @@
     </section>
 </template>
 <script>
-import firebaseDB from '../rest/firebase'
 //var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
 //var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 // if(!UserPassword.value.match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~,-])|([!,@,#,$,%,^,&,*,?,_,~,-].*[a-zA-Z0-9])/)) {
@@ -37,8 +36,8 @@ const passwdRegex = (value) => /^[a-zA-Z]{6,12}.[!,@,#,$,%,^,&]{0,}.[0-9\d]{1,}$
 export default {
     data(){
         return {
-            userEmail : "parkej32@google.com",
-            userPasswd : "goodgirl!0357",
+            userEmail : "",
+            userPasswd : "",
             emailRequire : true,
             passwordRequire : true,
             passwdRegexBool : true
@@ -84,17 +83,10 @@ export default {
             }
         },
         googleLogin(){
-            console.log("google")
-           firebaseDB.post('/verifyAssertion?key=AIzaSyDIXmxA1pMRLycwoiAVfhOroFGChAlhG7g',{
-            requestUri : 'http://localhost',
-            postBody : 'id_token=diary-user&providerId=google.com',
-            returnSecureToken : true,
-            returnIdpCredential : true
-           }).then(res=>{
-               console.log(res);
-           }).catch(error=>{
-               console.log(error);
-           });
+            this.$store.dispatch('googleLogin');
+        },
+        facebookLogin(){
+            this.$store.dispatch('facebookLogin');
         }
     }
 }

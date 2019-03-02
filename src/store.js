@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebaseDB from './rest/firebase'
+import {firebaseGoogleLogin, firebaseFacebookLogin} from './rest/auth'
 
 Vue.use(Vuex)
 
@@ -28,8 +29,14 @@ export default new Vuex.Store({
           console.log(error);
       });
     },
-    signUp(){
-
+    googleLogin(){
+      firebaseGoogleLogin()
+    },
+    facebookLogin(){
+      firebaseFacebookLogin();
+    },
+    signup({commit}, userData){
+      console.log(userData);
     }
   }
 })
