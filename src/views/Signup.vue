@@ -19,7 +19,6 @@
                 </div>
                 <div class="btn-bx"><button type="button" class="btn-join" @click="userSignup()">Sign Up</button></div>
             </fieldset>
-            {{$v.userRepasswd}}
         </div>
     </section>
 </template>
@@ -76,10 +75,10 @@ export default {
             }
         },
         userSignup (){
-            //if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex){
-                //this.$store.dispatch('signup', {userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
-                console.log({userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
-            //}
+            if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex && this.$v.userRepasswd.sameAsPassword){
+                this.$store.dispatch('signup', {userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
+                //console.log({userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
+            }
         }
     }
 }
