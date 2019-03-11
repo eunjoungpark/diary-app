@@ -58,7 +58,10 @@
                     </div>
                 </el-form-item>
             </el-form>
-            <button type="button" @click="dataFunc()">click</button> 
+            <el-row class="btn-grp">
+                <el-button type="primary" @click="submitData()">Save</el-button>
+                <el-button type="info">Cancel</el-button>
+            </el-row>
         </div>
     </section>
 </template>
@@ -110,6 +113,12 @@ export default {
         google: gmapApi
     },
     methods : {
+        //image files
+        handleChange(file, fileList) {
+            this.filelist = fileList.slice(-3);
+            
+        },       
+        //map
         setPlace(place) {
             this.place = place;
             this.usePlace();
@@ -119,30 +128,24 @@ export default {
                 const _lat = this.place.geometry.location.lat();
                 const _lng = this.place.geometry.location.lng();
                 this.place = null;
-                this.setMarker(_lat, _lng);
+                this.form.marker.position.lat = _lat;
+                this.form.marker.position.lng = _lng;
+                this.form.center.lat = _lat;
+                this.form.center.lng = _lng;
             }
-        },
-        handleChange(file, fileList) {
-            this.filelist = fileList.slice(-3);
-            
         },
         clickMarker(e){
             const _lat = e.latLng.lat();
             const _lng = e.latLng.lng();
-            this.setMarker(_lat, _lng);
-        },
-        setMarker(_lat, _lng){
             this.form.marker.position.lat = _lat;
             this.form.marker.position.lng = _lng;
-            this.form.center.lat = _lat;
-            this.form.center.lng = _lng;
         },
-        dataFunc(){
+        submitData(){
             const diary = this.form;
             diary.writeDate = new Date();
             diary.writer = "1111@1111.com";
             console.log(diary);
-        },
+        }
     }
 }
 </script>

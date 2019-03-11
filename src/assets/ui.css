@@ -43,6 +43,12 @@ a:focus {color:#d7604e;}
 .weather-color03, .weather-color03 > * {color:#aba9a5;}
 .weather-color04, .weather-color04 > * {color:#02bffd;}
 
+/* button
+-------------------------------------------------------------------------- */
+.btn-grp {text-align:center;}
+button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff;}
+button[class^="btn-"] svg {margin-right:5px; vertical-align:-2px;}
+
 /* Layout 
 -------------------------------------------------------------------------- */
 #app {width:600px; margin:0 auto;}
@@ -66,7 +72,7 @@ a:focus {color:#d7604e;}
 .logo img + span + span + span {font-size:14px;}
 .search-bx {float:left; margin-top:13px; width:250px; padding-left:10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
 .search-bx input[type="text"] {width:200px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
-.search-bx .btn-search i {font-size:20px; color:#ccc;}
+.search-bx .search i {font-size:20px; color:#ccc;}
 .top-menu {float:right;}
 .top-menu li {float:left; padding:6px 0;}
 .top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
@@ -87,8 +93,6 @@ a:focus {color:#d7604e;}
 .login-bx {width:400px; padding:50px; margin:0 auto; border:1px solid #e5e5e5;}
 .login-bx .input-bx {margin-bottom:10px;}
 .login-bx .el-alert {margin-top:10px;}
-.login-bx button[class^="btn-"] {width:100%; height:40px; margin-bottom:10px; font-weight:bold; font-size:15px; border-radius:4px; color:#fff;}
-.login-bx button[class^="btn-"] svg {margin-right:5px; vertical-align:-2px;}
 .etc-bx {text-align:right;}
 .etc-bx a {color:#52adf3; text-decoration:underline;}
 .btn-login {border:1px solid #d7604e; color:#d7604e !important;}
