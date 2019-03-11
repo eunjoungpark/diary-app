@@ -11,12 +11,13 @@
                 </el-form-item>
                 <el-form-item label="날짜">
                     <el-col :span="11">
-                        <el-date-picker type="date" placeholder="날짜를 지정해주세요." v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        <el-date-picker type="date" placeholder="날짜를 지정해주세요." v-model="form.date1" format="yyyy/MM/dd" value-format="yyyy/MM/dd" style="width: 100%;"></el-date-picker>
                     </el-col>
                     <el-col class="line" :span="2">-</el-col>
                     <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="시간을 지정해주세요." v-model="form.date2" style="width: 100%;"></el-time-picker>
+                        <el-time-picker type="fixed-time" placeholder="시간을 지정해주세요." v-model="form.date2" format="hh:mm" value-format="hh:mm" style="width: 100%;"></el-time-picker>
                     </el-col>
+                    {{$v.form.date1}}
                 </el-form-item>
                 <el-form-item label="기분" prop="emotion">
                     <el-radio-group v-model="form.emotion" class="radio-emotion">
@@ -40,13 +41,12 @@
                 <el-form-item label="이미지">
                     <el-upload
                         class="upload-demo"
-                        action="http://localhost:8080/uploads/"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :file-list="fileList2"
-                        list-type="picture">
-                        <el-button size="small" type="primary">Click to upload</el-button>
-                        <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+                        ref="upload"
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :auto-upload="false">
+                        <el-button slot="trigger" size="small" type="primary">select file</el-button>
+                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+                        <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="지도">
@@ -71,13 +71,16 @@
 <script>
 import {gmapApi} from 'vue2-google-maps'
 import GmapMarker from 'vue2-google-maps/src/components/marker'
+import {required, maxLength } from 'vuelidate/lib/validators'
+const dateRegex = (value) => /^[0-9]{4}.[/]{1}.[0-9]{2}.[/]{1}.[0-9]{2}$/.test(value);
+const timeRegex = (value) => /^[0-9]{2}.[:]{1}.[0-9]{2}$/.test(value);
+
 export default {
     data(){
         return {
             form : {
                 title : "",
                 desc: "",
-                region : "",
                 date1 : "",
                 date2 : "",
                 emotion : "",
@@ -92,6 +95,26 @@ export default {
             }],
             place : null,
             fileList2 : []
+        }
+    },
+    validations : {
+        form : {
+            title : {
+                required,
+                maxLength : maxLength(50)
+            },
+            desc : {
+                required,
+                maxLength : maxLength(1000)
+            },
+            date1 : {
+                required,
+                dateRegex
+            },
+            date2 : {
+                required,
+                timeRegex
+            }
         }
     },
     components : {
@@ -130,11 +153,8 @@ export default {
                 this.place = null;
             }
         },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
+        submitUpload() {
+            this.$refs.upload.submit();
         }
     }
 }
