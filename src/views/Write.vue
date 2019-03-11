@@ -4,23 +4,24 @@
         <div class="write-bx">
             <el-form ref="form" :model="form">
                 <el-form-item label="제목">
-                    <el-input v-model="form.title"></el-input>
+                    <el-input v-model="form.title" @blur="$v.$touch()"></el-input>
+                    <el-alert title="필수 입력 항목입니다." type="error" v-if="$v.form.title.$error"></el-alert>
+                    <el-alert title="100자 이하로 작성해주세요." type="error" v-if="!$v.form.title.maxLength"></el-alert>
                 </el-form-item>
                 <el-form-item label="내용">
-                    <el-input type="textarea" v-model="form.desc"></el-input>
+                    <el-input type="textarea" v-model="form.desc" @blur="$v.$touch()"></el-input>
+                    <el-alert title="필수 입력 항목입니다." type="error" v-if="$v.form.desc.$error"></el-alert>
+                    <el-alert title="1000자 이하로 작성해주세요." type="error" v-if="!$v.form.desc.maxLength"></el-alert>
                 </el-form-item>
                 <el-form-item label="날짜">
-                    <el-col :span="11">
-                        <el-date-picker type="date" placeholder="날짜를 지정해주세요." v-model="form.date1" format="yyyy/MM/dd" value-format="yyyy/MM/dd" style="width: 100%;"></el-date-picker>
+                    <el-col :span="24">
+                        <el-date-picker type="date" @blur="$v.$touch()" placeholder="날짜를 지정해주세요." v-model="form.evtDate" format="yyyy/MM/dd" value-format="yyyy/MM/dd" style="width: 100%;"></el-date-picker>
                     </el-col>
-                    <el-col class="line" :span="2">-</el-col>
-                    <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="시간을 지정해주세요." v-model="form.date2" format="hh:mm" value-format="hh:mm" style="width: 100%;"></el-time-picker>
-                    </el-col>
-                    {{$v.form.date1}}
+                    <el-alert title="필수 입력 항목입니다." type="error" v-if="$v.form.evtDate.$error"></el-alert>
                 </el-form-item>
+                {{$v.form.evtDate}}
                 <el-form-item label="기분" prop="emotion">
-                    <el-radio-group v-model="form.emotion" class="radio-emotion">
+                    <el-radio-group v-model="form.emotion">
                         <el-radio label="angry" class="emotion-color01"><icon name="angry" scale="1.3" /> <span class="label">화남</span></el-radio>
                         <el-radio label="sad-cry" class="emotion-color01"><icon name="sad-cry" scale="1.3" /> <span class="label">슬픔</span></el-radio>
                         <el-radio label="frown" class="emotion-color01"><icon name="frown" scale="1.3" /> <span class="label">짜증</span></el-radio>
@@ -41,29 +42,23 @@
                 <el-form-item label="이미지">
                     <el-upload
                         class="upload-demo"
-                        ref="upload"
-                        action="https://jsonplaceholder.typicode.com/posts/"
-                        :auto-upload="false">
-                        <el-button slot="trigger" size="small" type="primary">select file</el-button>
-                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
-                        <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+                        action=""
+                        :on-change="handleChange"
+                        :file-list="form.filelist">
+                        <el-button size="small" type="primary">Click to upload</el-button>
+                        <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="지도">
                     <div class="map">
                         <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
-                        <Gmap-Map :zoom="16" :center="center" @click="mapClick()">
-                            <Gmap-Marker v-for="(marker, index) in markers"
-                                :key="index"
-                                :position="marker.position"
-                                @click="findPlace()"
-                                :clickable="true"
-                                :draggable="true"
-                                ></Gmap-Marker>
+                        <Gmap-Map :zoom="16" :center="form.center" @click="clickMarker">
+                            <Gmap-Marker :position="form.marker.position" :clickable="false" :draggable="false"></Gmap-Marker>
                         </Gmap-Map>
                     </div>
                 </el-form-item>
             </el-form>
+            <button type="button" @click="dataFunc()">click</button> 
         </div>
     </section>
 </template>
@@ -72,48 +67,39 @@
 import {gmapApi} from 'vue2-google-maps'
 import GmapMarker from 'vue2-google-maps/src/components/marker'
 import {required, maxLength } from 'vuelidate/lib/validators'
-const dateRegex = (value) => /^[0-9]{4}.[/]{1}.[0-9]{2}.[/]{1}.[0-9]{2}$/.test(value);
-const timeRegex = (value) => /^[0-9]{2}.[:]{1}.[0-9]{2}$/.test(value);
-
 export default {
     data(){
         return {
             form : {
                 title : "",
                 desc: "",
-                date1 : "",
-                date2 : "",
+                evtDate : "",
                 emotion : "",
-                weather : ""
+                weather : "",
+                center : {lat: 37.5001823, lng: 127.0078127},
+                marker: {
+                    position: {
+                        lat: 37.5001823,
+                        lng: 127.0078127
+                    }
+                },
+                filelist : []
             },
-            center : {lat: 37.5001823, lng: 127.0078127},
-            markers: [{
-                position: {
-                    lat: 37.5001823,
-                    lng: 127.0078127
-                }
-            }],
             place : null,
-            fileList2 : []
         }
     },
     validations : {
         form : {
             title : {
                 required,
-                maxLength : maxLength(50)
+                maxLength : maxLength(100)
             },
             desc : {
                 required,
                 maxLength : maxLength(1000)
             },
-            date1 : {
-                required,
-                dateRegex
-            },
-            date2 : {
-                required,
-                timeRegex
+            evtDate : {
+                required
             }
         }
     },
@@ -124,38 +110,39 @@ export default {
         google: gmapApi
     },
     methods : {
-        setDescription(description) {
-            this.description = description;
-        },
         setPlace(place) {
             this.place = place;
             this.usePlace();
-        },
-        findPlace(){
-            //center=marker.position
-            console.log("aa");
-        },
-        mapClick(){
-            console.log(this.place);
         },
         usePlace() {
             if (this.place) {
                 const _lat = this.place.geometry.location.lat();
                 const _lng = this.place.geometry.location.lng();
-                this.markers.push({
-                    position: {
-                    lat: _lat,
-                    lng: _lng,
-                    }
-                })
-                this.center.lat = _lat;
-                this.center.lng = _lng;
                 this.place = null;
+                this.setMarker(_lat, _lng);
             }
         },
-        submitUpload() {
-            this.$refs.upload.submit();
-        }
+        handleChange(file, fileList) {
+            this.filelist = fileList.slice(-3);
+            
+        },
+        clickMarker(e){
+            const _lat = e.latLng.lat();
+            const _lng = e.latLng.lng();
+            this.setMarker(_lat, _lng);
+        },
+        setMarker(_lat, _lng){
+            this.form.marker.position.lat = _lat;
+            this.form.marker.position.lng = _lng;
+            this.form.center.lat = _lat;
+            this.form.center.lng = _lng;
+        },
+        dataFunc(){
+            const diary = this.form;
+            diary.writeDate = new Date();
+            diary.writer = "1111@1111.com";
+            console.log(diary);
+        },
     }
 }
 </script>
