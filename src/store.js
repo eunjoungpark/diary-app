@@ -2,65 +2,77 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
-import firebase from 'firebase/app'
-import 'firebase/auth';
-import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout, firebaseUser} from './rest/auth'
+import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseUser, firebaseLogout} from './rest/auth'
+import {writeDiary, fetchDiary} from './rest/database'
+Vue.use(Vuex);
 
-Vue.use(Vuex)
-
+const vm = new Vue();
 export default new Vuex.Store({
-  state : {
-    user : null
+  state: {
+    user : null,
+    uid : null,
+    formData : null
   },
   mutations: {
-    setUser(state,user){
-      state.user = user;
-    }
+    setUser(state, user){
+      state.user = user.email;
+      state.uid = user.uid;
+    },
   },
   actions: {
     login(context, userData){
       firebaseLogin(userData);
       context.dispatch('getUser');
     },
-    googleLogin(context){
+    googleLogin({commit,dispatch}){
       firebaseGoogleLogin();
-      context.dispatch('getUser');
+      dispatch('getUser');
     },
-    facebookLogin(context){
+    facebookLogin({dispatch}){
       firebaseFacebookLogin();
-      context.dispatch('getUser');
+      dispatch('getUser');
     },
-    signup(context, userData){
+    signup({dispatch}, userData){
       firebaseSignup(userData);
-      context.dispatch('getUser');
-      // firebaseSignup(userData).then(res=>{
-      //   axios.post('https://diary-user.firebaseio.com/users.json' + '?auth=' + res.data.idToken ,{userEmail : userData.userEmail}).then(res=>{
-      //     console.log(res);
-      //   }).catch(error=>{
-      //     console.log(error);
-      //   });
-      // }).catch(error=>{
-      //   console.log(error);
-      // });
+      dispatch('getUser');
     },
-    logout({commit}){
-      firebaseLogout();
-      commit('setUser',null);
-    },
-    getUser({commit}){
-      firebaseUser.then(user=>{
-        if(user !== null){
+    getUser({commit}){ //현재 user가져오기
+      firebase.auth().onAuthStateChanged((user)=>{
+        if (user !== null) {
           commit('setUser',user);
-        }
-      }).catch(()=>{
-        commit('setUser',null);
-      })
+          router.replace('/');
+        } else {
+          commit('setUser',{
+            email : null,
+            uid : null
+          });
+        } 
+      });
+    },
+    logout({commit,state}){
+      firebaseLogout();
+      commit('setUser',{
+        email : null,
+        uid : null
+      });
+    },
+    saveDiaryData({state}, formData){
+      writeDiary(state.uid, formData);
+      router.push('/');
+    },
+    getDiary(contxt, uid){
+      fetchDiary(uid);
     }
   },
   getters : {
     user (state) {
-      if(state.user){
-        return state.user.email;
+      if(state.uid){
+        return state.user
+      }
+    },
+    uid (state){
+      if(state.uid){
+        return state.uid
       }
     }
   }
