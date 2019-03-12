@@ -1,29 +1,19 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
 import router from '../router';
+import './apikey';
+import Vue from 'vue'
 
-const config = {
-    apiKey: "AIzaSyDIXmxA1pMRLycwoiAVfhOroFGChAlhG7g",
-    authDomain: "diary-user.firebaseapp.com",
-    databaseURL: "https://diary-user.firebaseio.com",
-    projectId: "diary-user",
-    storageBucket: "diary-user.appspot.com",
-    messagingSenderId: "894427736343"
-};
-firebase.initializeApp(config);
+const vm = new Vue();
 
 //google
 const firebaseGoogle = new firebase.auth.GoogleAuthProvider();
 const firebaseGoogleLogin = () => {
     firebase.auth().signInWithPopup(firebaseGoogle).then(function(result) {
-        let token = result.credential.accessToken;
-        let user = result.user;
-        
+        loginSuccess();  
     }).catch(function(error) {
-        let errorCode = error.code;
         let errorMessage = error.message;
-        let email = error.email;
-        let credential = error.credential;
+        console.log(errorMessage);
     });
 };
 
@@ -31,13 +21,10 @@ const firebaseGoogleLogin = () => {
 const firebaseFacebook = new firebase.auth.FacebookAuthProvider();
 const firebaseFacebookLogin = () => {
     firebase.auth().signInWithPopup(firebaseFacebook).then(function(result) {
-        let token = result.credential.accessToken;
-        let user = result.user;
+        loginSuccess();
     }).catch(function(error) {
-        var errorCode = error.code;
         var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
+        console.log(errorMessage);
     });
 };
 
@@ -45,10 +32,9 @@ const firebaseFacebookLogin = () => {
 const firebaseLogin = (userData) => {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>{
         firebase.auth().signInWithEmailAndPassword(userData.userEmail, userData.userPasswd).then(()=>{
-            router.replace('/');
+            loginSuccess();
         });
     }).catch(function(error) {
-        //var errorCode = error.code;
         var errorMessage = error.message;
         console.log(errorMessage);
     });
@@ -62,31 +48,35 @@ const firebaseSignup = (userData) => {
     });
 };
 
-//session
-const firebaseUser = new Promise ((resolve, reject)=>{
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user != null) {
-            resolve(user);
-        } else {
-            //reject(null);
-        } 
-    });
-});
-
 //logout
 const firebaseLogout = () => {
     firebase.auth().signOut().then(function() {
+        vm.$message({
+            message : '로그아웃 되었습니다.',
+            type : 'error',
+            duration : 2000,
+        });
         router.replace('/login');
     }).catch(function(error) {
         console.log('error');
     });
 }
 
+//login success
+const loginSuccess = () => {
+    vm.$message({
+        message : '로그인 되었습니다.',
+        type : 'success',
+        center : true,
+        duration : 2000
+    });
+}
+
+
 export {
     firebaseGoogleLogin,
     firebaseFacebookLogin,
     firebaseLogin,
-    firebaseSignup,
-    firebaseUser,
+    firebaseSignup,    
     firebaseLogout
 }

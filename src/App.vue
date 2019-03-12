@@ -17,6 +17,8 @@ export default {
     Header,
     Container
   },
-  
+  created (){
+    this.$store.dispatch('getUser');
+  }
 }
 </script>
