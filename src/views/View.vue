@@ -22,8 +22,8 @@
                     </p>
                     <p class="date">2019.02.20 14:25</p>
                     <div class="view-func">
-                        <button type="button" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
-                        <button type="button" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
+                        <button type="button" class="ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
+                        <button type="button" class="ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
                     </div>
                 </div>
             </div>

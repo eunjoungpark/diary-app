@@ -70,6 +70,7 @@
 import {gmapApi} from 'vue2-google-maps'
 import GmapMarker from 'vue2-google-maps/src/components/marker'
 import {required, maxLength } from 'vuelidate/lib/validators'
+import {writeDiary} from '../rest/database'
 export default {
     data(){
         return {
@@ -88,7 +89,7 @@ export default {
                 },
                 filelist : []
             },
-            place : null,
+            place : null
         }
     },
     validations : {
@@ -110,7 +111,8 @@ export default {
         GmapMarker : GmapMarker
     },
     computed: {
-        google: gmapApi
+        // google: gmapApi,
+       
     },
     methods : {
         //image files
@@ -141,10 +143,16 @@ export default {
             this.form.marker.position.lng = _lng;
         },
         submitData(){
-            const diary = this.form;
-            diary.writeDate = new Date();
-            diary.writer = "1111@1111.com";
-            console.log(diary);
+            let user = this.$store.getters.user;
+            if(!user){
+                return;
+            }
+            // if($v.form.title.required && $v.form.desc.required && $v.form.desc.evtDate){
+                let diary = this.form;
+                diary.writeDate = new Date();
+                diary.writer = this.user;
+                writeDiary(diary);
+            // }
         }
     }
 }
