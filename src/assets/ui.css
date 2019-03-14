@@ -38,7 +38,7 @@ a:focus {color:#d7604e;}
 
 /* icon 
 -------------------------------------------------------------------------- */
-.btn-ico {width:25px; height:25px; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center;}
+.btn-ico {width:25px; height:25px; padding:5px 0; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center; box-sizing:border-box;}
 .btn-ico:hover {background-color:#d7604e; color:#fff; border:1px solid #d7604e;}
 .emotion-color01, .emotion-color01 > * {color:#fdd102;}
 .snowflake, .snowflake > * {color:#b1e4f5;}
@@ -124,7 +124,7 @@ a:focus {color:#d7604e;}
 .list-bx .list-cont .txt {margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .list-bx .list-cont .date {color:#ababab;}
 .list-bx .list-cont .list-func {position:absolute; bottom:5px; right:10px;}
-.list-bx .list-cont .list-func button {margin-left:5px;}
+.list-bx .list-cont .list-func a {display:inline-block; margin-left:5px;}
 
 /* view-wrap
 -------------------------------------------------------------------------- */
@@ -134,6 +134,7 @@ a:focus {color:#d7604e;}
 .view-bx .view-head .status .emotion, .view-bx .view-head .status .weather {float:left;}
 .view-bx .view-head .status .date {float:left; margin-right:10px;}
 .view-bx .view-head .view-func {float:left; margin-top:-3px;}
+.view-bx .view-head .view-func a {display:inline-block;}
 .view-bx .view-head .btn-ico {margin-right:5px; background-color:#fff;}
 .view-bx .view-head .btn-ico:hover {color:#d7604e;}
 .view-bx .view-cont {padding:20px; line-height:1.8;}

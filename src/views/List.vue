@@ -5,10 +5,10 @@
     
     <!--// list -->
     <div class="list-bx" v-loading="loading" element-loading-text="Loading..."  element-loading-spinner="el-icon-loading">
-        <div v-if="diaries === null" :class="{'show' : diaries !== null, 'no-data' : true}">
+        <div :class="{'show' : diaries === null, 'no-data' : true}">
           <a >NO DATA<br><br><icon name="plus" scale="2.5" /></a>
         </div>
-        <ul v-else>
+        <ul v-if="diaries !== null">
           <li v-for = "(diary, key, index) in diaries" :key="index" :id="key" class="list-cell clear">          
             <p class="list-img"><img src="" alt="default" /></p>
             <div class="list-cont">
@@ -71,12 +71,10 @@ export default {
       if(this.$store.getters.diaries !== null){
         this.loading = false;
         return this.$store.getters.diaries;
+      }else {
+        this.loading = false;
       }
     }
   }
 }
 </script>
-
-<style>
-
-</style>

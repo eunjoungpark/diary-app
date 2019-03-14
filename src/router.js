@@ -6,6 +6,7 @@ import Signup from './views/Signup.vue'
 import List from './views/List.vue'
 import View from './views/View.vue'
 import Write from './views/Write.vue'
+import Modify from './views/Modify.vue'
 
 Vue.use(Router)
 
@@ -20,7 +21,7 @@ export default new Router({
         {component: List, path: '/'},
         {component: View, path: '/view/:id'},
         {component: Write, path: '/write'},
-        {component: Write, path: '/modify/:id'}
+        {component: Modify, path: '/modify/:id'}
       ]
     },
     {
