@@ -18,7 +18,7 @@ export default {
     Container
   },
   created (){
-    this.$store.dispatch('getUser');
+    this.$store.dispatch('get_user');
   }
 }
 </script>

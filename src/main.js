@@ -8,7 +8,6 @@ import './plugins/element.js'
 import Icon from 'vue-awesome/components/Icon'
 import Vuelidate from 'vuelidate'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import _ from 'lodash'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -18,8 +17,6 @@ Vue.use(VueGoogleMaps, {
 })
 Vue.use(Vuelidate)
 Vue.component('icon', Icon)
-Vue.use(_)
-
 Vue.config.productionTip = false
 
 const vm = new Vue({

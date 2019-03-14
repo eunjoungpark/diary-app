@@ -1,23 +1,39 @@
 import './apikey';
+import store from '../store'
 const database = firebase.database();
 
 //글작성
 const writeDiary = (uid, formData) => {
-    let newPostKey = {};
-    newPostKey.key = firebase.database().ref().child('diary').push().key;
-    newPostKey.date = new Date();
+    let newDiaryKey = {};
+    newDiaryKey = firebase.database().ref().child('diary').push().key;
     let updates = {};
-    updates['/diary/' + uid + '/' + newPostKey] = formData;
+    updates['/diary/' + uid + '/' + newDiaryKey] = formData;
     return firebase.database().ref().update(updates);
 }
 
-const fetchDiary = (uid) =>{
-    let newPostKey = firebase.database().ref('diary/'+ uid).limitToLast(100);
-    // let getDiary = firebase.database().ref('diary/');
-    console.log(newPostKey);
+const fetchDiaries = (uid) =>{
+    if(!uid) {
+        return;
+    }
+    const diariesDB = firebase.database().ref().child('diary/' + uid);
+    diariesDB.on("value", snap=>{
+        store.dispatch('get_diaries', snap.val());
+    });
+}
+
+const fetchDiary = (uid, diaryId) =>{
+    if(!uid) {
+        return;
+    }
+    const diariesDB = firebase.database().ref().child('diary/' + uid);
+    const diaryDB = diariesDB.child(`${diaryId}`);
+    diaryDB.on("value", snap=>{
+        store.dispatch('get_diary', snap.val());
+    });
 }
 
 export {
     writeDiary,
+    fetchDiaries,
     fetchDiary
 }

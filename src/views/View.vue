@@ -1,29 +1,17 @@
 <template>
     <section class="contents-wrap view-wrap">
         <h3 class="skip">상세</h3>
-        <div class="view-bx">
+        <div class="view-bx" v-if="diary !== null">
             <div class="view-head">
-                <p class="tit">양재꽃시장 다녀온날 양재꽃시장 다녀온날양재꽃시장 다녀온날 양재꽃시장 다녀온날양재꽃시장 다녀온날 양재꽃시장 다녀온날</p>
+                <p class="tit">{{diary.title}}</p>
                 <div class="status clear">
-                    <p class="emotion">
-                        <icon name="angry" scale="1.3" class="emotion-color01" />
-                        <icon name="sad-cry" scale="1.3" class="emotion-color01" />
-                        <icon name="frown" scale="1.3" class="emotion-color01" />
-                        <icon name="grin-beam" scale="1.3" class="emotion-color01" />
-                        <icon name="surprise" scale="1.3" class="emotion-color01" />
-                        <icon name="smile" scale="1.3" class="emotion-color01" />
+                    <p class="date">{{diary.evtDate}}</p>
+                    <p class="emotion" v-if="diary.emotion !=''"><icon :name="diary.emotion" scale="1.3" class="emotion-color01" />
                     </p>
-                    <p class="weather">
-                        <icon name="cloud" scale="1.3" class="weather-color03" />
-                        <icon name="cloud-showers-heavy" scale="1.3" class="weather-color03" />
-                        <icon name="sun" scale="1.3" class="weather-color02" />
-                        <icon name="snowflake" scale="1.3" class="weather-color01" />
-                        <icon name="wind" scale="1.3" class="weather-color04" />
-                    </p>
-                    <p class="date">2019.02.20 14:25</p>
+                    <p class="weather"><icon :name="diary.weather" scale="1.3" :class="diary.weather" /></p>
                     <div class="view-func">
-                        <button type="button" class="ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
-                        <button type="button" class="ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
+                        <button type="button" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
+                        <button type="button" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button>
                     </div>
                 </div>
             </div>
@@ -37,14 +25,7 @@
                 </el-carousel>
                 <!-- 사진첩 //-->
                 <!--// 작성글 -->
-                <div class="text">
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                    오늘 양재꽃시장을 다녀왔다. 너무 이뻐서 모두 사고싶었지만, 다음을 기약하며 오늘은 이 아이만 데려왔다.<br />
-                </div>
+                <div class="text">{{diary.desc}}</div>
                 <!-- 작성글 //-->
                 <!--// 지도 -->
                 <div class="map">
@@ -83,6 +64,14 @@ export default {
     components : {
         'google-map' : Map,
         'google-marker' : Marker
+    },
+    created() {
+        this.$store.dispatch('fetch_diary', this.$route.params.id);
+    },
+    computed : {
+        diary (){
+            return this.$store.getters.diary;
+        }
     }
 }
 </script>

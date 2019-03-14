@@ -31,11 +31,11 @@
                 </el-form-item>
                 <el-form-item label="날씨" prop="weather" class="radio-weather">
                     <el-radio-group v-model="form.weather">
-                        <el-radio label="sun" class="weather-color02"><icon name="sun" scale="1.3" /> <span class="label">맑음</span></el-radio>
-                        <el-radio label="cloud" class="weather-color03"><icon name="cloud" scale="1.3" /> <span class="label">구름</span></el-radio>
-                        <el-radio label="cloud-showers-heavy" class="weather-color03"><icon name="cloud-showers-heavy" scale="1.3" /> <span class="label">비</span></el-radio>
-                        <el-radio label="snowflake" class="weather-color01"><icon name="snowflake" scale="1.3" /> <span class="label">눈</span></el-radio>
-                        <el-radio label="wind" class="weather-color04"><icon name="wind" scale="1.3" /> <span class="label">바람</span></el-radio>
+                        <el-radio label="sun" class="sun"><icon name="sun" scale="1.3" /> <span class="label">맑음</span></el-radio>
+                        <el-radio label="cloud" class="cloud"><icon name="cloud" scale="1.3" /> <span class="label">구름</span></el-radio>
+                        <el-radio label="cloud-showers-heavy" class="cloud-showers-heavy"><icon name="cloud-showers-heavy" scale="1.3" /> <span class="label">비</span></el-radio>
+                        <el-radio label="snowflake" class="snowflake"><icon name="snowflake" scale="1.3" /> <span class="label">눈</span></el-radio>
+                        <el-radio label="wind" class="wind"><icon name="wind" scale="1.3" /> <span class="label">바람</span></el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="이미지">
@@ -68,7 +68,7 @@
 <script>
 import {gmapApi} from 'vue2-google-maps'
 import GmapMarker from 'vue2-google-maps/src/components/marker'
-import {required, maxLength, minLength  } from 'vuelidate/lib/validators'
+import {required, maxLength} from 'vuelidate/lib/validators'
 
 export default {
     data(){
@@ -87,8 +87,7 @@ export default {
                     }
                 },
                 filelist : [],
-                writer : null,
-                uid : null
+                writer : null
             },
             place : null
         }
@@ -145,10 +144,9 @@ export default {
         submitData(e){
             this.$v.$touch();
             this.form.writer = this.$store.getters.user;
-            this.form.uid = this.$store.getters.uid;
             e.preventDefault();
 
-            if(!this.form.uid){
+            if(!this.$store.getters.uid){
                 return;
             }
 
@@ -160,7 +158,7 @@ export default {
                     type : 'success',
                     center : true,
                     duration : 2000,
-                    onClose : this.$store.dispatch('saveDiaryData',diary)
+                    onClose : this.$store.dispatch('save_diary',diary)
                 });
             }
         }
