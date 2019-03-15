@@ -2,8 +2,7 @@
     <section class="contents-wrap write-wrap">
         <h3 class="skip">작성</h3>
         <div class="write-bx">
-            <!-- @submit.native.prevent="submitData" -->
-            <el-form>
+            <el-form v-if="diary != null">
                 <el-form-item label="제목">
                     <el-input v-model="form.title"></el-input>
                     <el-alert title="필수 입력 항목입니다." type="error" v-if="$v.form.title.$error"></el-alert>
@@ -43,7 +42,8 @@
                     <el-upload
                         class="upload-demo"
                         action=""
-                        :on-change="handleChange">
+                        :on-change="handleChange"
+                        >
                         <el-button size="small" type="primary">Click to upload</el-button>
                         <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
                     </el-upload>
@@ -112,13 +112,21 @@ export default {
     components : {
         GmapMarker : GmapMarker
     },
-    computed: {
-        google: gmapApi,       
+    created (){
+        this.$store.dispatch('fetch_diary', this.$route.params.id);
+    },
+    computed : {
+        diary (){
+            if(this.$store.getters.diary != null){
+                this.form = this.$store.getters.diary
+                return this.form;
+            }
+        }
     },
     methods : {
         //image files
         handleChange(file, fileList) {
-            this.filelist = fileList.slice(-3);   
+            //this.filelist = fileList.slice(-3);   
         },       
         //map
         setPlace(place) {
@@ -135,11 +143,11 @@ export default {
             if (this.place) {
                 const _lat = this.place.geometry.location.lat();
                 const _lng = this.place.geometry.location.lng();
+                this.place = null;
                 this.form.marker.position.lat = _lat;
                 this.form.marker.position.lng = _lng;
                 this.form.center.lat = _lat;
                 this.form.center.lng = _lng;
-                this.place = null;
             }
         },
         clickMarker(e){
@@ -163,11 +171,11 @@ export default {
                 const diary = this.form;
                 diary.writeDate = new Date();
                 this.$message({
-                    message : '등록되었습니다.',
+                    message : '수정되었습니다.',
                     type : 'success',
                     center : true,
                     duration : 1000,
-                    onClose : this.$store.dispatch('save_diary',diary)
+                    onClose : this.$store.dispatch('update_diary', {diaryId : this.$route.params.id, formData : diary})
                 });
             }
         }

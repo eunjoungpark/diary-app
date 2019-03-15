@@ -24,6 +24,9 @@ button::-moz-focus-inner {padding:0; border:0;}
 body {font:14px 'Noto Sans KR', "돋움", Dotum, sans-serif; color:#666;}
 input[type=text]::-ms-clear {display:none;}
 label, button {font-family:'Noto Sans KR', "돋움", Dotum, sans-serif; color:#666;}
+.hide {display:none !important;}
+.show {display:block !important;}
+
 /* Anchor
 -------------------------------------------------------------------------- */
 a,
@@ -35,13 +38,13 @@ a:focus {color:#d7604e;}
 
 /* icon 
 -------------------------------------------------------------------------- */
-.btn-ico {width:25px; height:25px; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center;}
+.btn-ico {width:25px; height:25px; padding:5px 0; border-radius:15px; border:1px solid #a5a5a5; line-height:1; letter-spacing:-2px; text-align:center; box-sizing:border-box;}
 .btn-ico:hover {background-color:#d7604e; color:#fff; border:1px solid #d7604e;}
 .emotion-color01, .emotion-color01 > * {color:#fdd102;}
-.weather-color01, .weather-color01 > * {color:#b1e4f5;}
-.weather-color02, .weather-color02 > * {color:#f7a515;}
-.weather-color03, .weather-color03 > * {color:#aba9a5;}
-.weather-color04, .weather-color04 > * {color:#02bffd;}
+.snowflake, .snowflake > * {color:#b1e4f5;}
+.sun, .sun > * {color:#f7a515;}
+.cloud, .cloud > *, .cloud-showers-heavy, .cloud-showers-heavy > * {color:#aba9a5;}
+.wind, .wind > * {color:#02bffd;}
 
 /* button
 -------------------------------------------------------------------------- */
@@ -55,7 +58,7 @@ a:focus {color:#d7604e;}
 #wrapper {position:relative; padding-top:60px;}
 #slot-wrap {border:1px solid #a8a8a8; border-top:0;}
 #container {position:relative; padding-left:40px;}
-.contents-wrap {min-height:300px; padding:20px;}
+.contents-wrap {min-height:200px; padding:20px;}
 #header {position:absolute; top:0; left:0; right:0; height:60px; padding:0 10px; background-color:#d77869;}
 #nav {position:absolute; top:0; left:0; width:40px; height:100%; padding:20px 0 20px 7px; overflow:hidden; background-color:#666666;}
 
@@ -65,7 +68,7 @@ a:focus {color:#d7604e;}
 #header a {color:#fff;}
 #header h1 {float:left;}
 .logo {margin-right:30px;}
-.logo a {font-weight:bold; font-size:21px; font-family:'Pacifico'; line-height:50px;}
+.logo a {font-weight:bold; font-size:18px; font-family:'Pacifico'; line-height:50px;}
 .logo img {width:50px; margin-top:10px; vertical-align:top;}
 .logo img + span {font-size:18px;}
 .logo img + span + span {font-size:16px;}
@@ -74,8 +77,8 @@ a:focus {color:#d7604e;}
 .search-bx input[type="text"] {width:200px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
 .search-bx .search i {font-size:20px; color:#ccc;}
 .top-menu {float:right;}
-.top-menu li {float:left; padding:6px 0;}
-.top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
+.top-menu li {float:left; padding:16px 0; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
+.top-menu li a {display:block; padding:0 5px; }
 
 /* nav 
 -------------------------------------------------------------------------- */
@@ -107,9 +110,10 @@ a:focus {color:#d7604e;}
 -------------------------------------------------------------------------- */
 /* no data */
 .no-data {padding:10px; border:1px dashed #a8a8a8; text-align:center; border-radius:10px; }
-.no-data button {width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px;}
+.no-data button {display:block; width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px; box-sizing:border-box;}
 
 /* list */
+.list-bx {min-height:200px;}
 .list-bx .list-cell {margin-bottom:10px; border:1px solid #a8a8a8;}
 .list-bx .list-img {float:left;}
 .list-bx .list-img img {display:block; width:130px; height:130px;}
@@ -120,19 +124,22 @@ a:focus {color:#d7604e;}
 .list-bx .list-cont .txt {margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .list-bx .list-cont .date {color:#ababab;}
 .list-bx .list-cont .list-func {position:absolute; bottom:5px; right:10px;}
-.list-bx .list-cont .list-func button {margin-left:5px;}
+.list-bx .list-cont .list-func a {display:inline-block; margin-left:5px;}
 
 /* view-wrap
 -------------------------------------------------------------------------- */
+.view-bx {min-height:200px;}
 .view-bx .view-head {padding:20px; background-color:#f7f7f7;}
 .view-bx .view-head .tit {margin-bottom:10px; font-size:21px; color:#000;}
 .view-bx .view-head .status .emotion svg, .view-bx .view-head .status .weather svg {margin-right:5px;}
 .view-bx .view-head .status .emotion, .view-bx .view-head .status .weather {float:left;}
 .view-bx .view-head .status .date {float:left; margin-right:10px;}
 .view-bx .view-head .view-func {float:left; margin-top:-3px;}
+.view-bx .view-head .view-func a {display:inline-block;}
 .view-bx .view-head .btn-ico {margin-right:5px; background-color:#fff;}
 .view-bx .view-head .btn-ico:hover {color:#d7604e;}
 .view-bx .view-cont {padding:20px; line-height:1.8;}
+.view-bx .view-cont .text {white-space:pre;}
 .view-bx .view-cont .map {margin-top:50px;}
 
 /* element.io style */
