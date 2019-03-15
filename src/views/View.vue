@@ -29,8 +29,8 @@
                     <!-- 작성글 //-->
                     <!--// 지도 -->
                     <div class="map" v-if="diary.marker.position.lat !=0 && diary.marker.position.lng !=0">
-                        <google-map :center="center" :zoom="16">
-                            <google-marker v-for="(m,idx) in markers" :position="m.position" :clickable="true" :draggable="true" @click="center=m.position" :key="idx"></google-marker>
+                        <google-map :center="diary.center" :zoom="16">
+                            <google-marker :position="diary.marker.position" :clickable="false" :draggable="false"></google-marker>
                         </google-map>
                     </div>
                     <!-- 지도 //-->

@@ -2,8 +2,8 @@
     <nav id="nav">
         <h2 class="skip">왼쪽 메뉴</h2>
         <ul>
-            <!-- <router-link tag="li" class="nav-icon01" to="/login"><a><icon name="user-alt" scale="1.2" /> <span class="nav-label">Login</span></a></router-link> -->
-            <li class="nav-icon02"><a href="#" @click.prevent="toWrite()"><icon name="edit" scale="1.2" /> <span class="nav-label">Add Diary</span></a></li>
+            <router-link tag="li" class="nav-icon01" to="/login" v-if="user==null"><a><icon name="user-alt" scale="1.2" /> <span class="nav-label">Login</span></a></router-link>
+            <li class="nav-icon02" v-else><a href="#" @click.prevent="toWrite()"><icon name="edit" scale="1.2" /> <span class="nav-label">Add Diary</span></a></li>
         </ul>        
     </nav>
 </template>
@@ -11,6 +11,13 @@
 <script>
 
 export default {
+    computed : {
+        user(){
+            if(this.$store.getters.user){
+                return this.$store.getters.user;
+            }
+        }
+    },
     methods : {
         toWrite(){
             if(this.$store.getters.user != null){

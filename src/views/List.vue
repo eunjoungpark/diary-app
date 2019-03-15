@@ -17,8 +17,6 @@
               <div class="list-func">
                 <router-link :to="'/modify/'+ key" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></router-link>
                 <a href="#" @click="deleteDiary(key)" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
-                <!-- <button type="button" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></button>
-                <button type="button" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></button> -->
               </div>
             </div>
           </li>

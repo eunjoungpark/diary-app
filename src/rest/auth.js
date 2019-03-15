@@ -5,6 +5,7 @@ import './apikey';
 import Vue from 'vue'
 
 const vm = new Vue();
+firebase.auth().languageCode = 'ko';
 
 //google
 const firebaseGoogle = new firebase.auth.GoogleAuthProvider();
@@ -13,8 +14,11 @@ const firebaseGoogleLogin = () => {
         loginSuccess();
         router.replace('/');
     }).catch(function(error) {
-        let errorMessage = error.message;
-        console.log(errorMessage);
+        vm.$message({
+            message : "이메일 또는 비밀번호가 유효하지 않습니다.",
+            type : 'error',
+            duration : 1500,
+        });
     });
 };
 
@@ -25,8 +29,11 @@ const firebaseFacebookLogin = () => {
         loginSuccess();
         router.replace('/');
     }).catch(function(error) {
-        var errorMessage = error.message;
-        console.log(errorMessage);
+        vm.$message({
+            message : "이메일 또는 비밀번호가 유효하지 않습니다.",
+            type : 'error',
+            duration : 1500,
+        });
     });
 };
 
@@ -36,10 +43,13 @@ const firebaseLogin = (userData) => {
         firebase.auth().signInWithEmailAndPassword(userData.userEmail, userData.userPasswd).then(()=>{
             loginSuccess();
             router.replace('/');
+        }).catch(function(error) {
+            vm.$message({
+                message : "이메일 또는 비밀번호가 유효하지 않습니다.",
+                type : 'error',
+                duration : 1500,
+            });
         });
-    }).catch(function(error) {
-        var errorMessage = error.message;
-        console.log(errorMessage);
     });
 };
 
@@ -57,7 +67,7 @@ const firebaseLogout = () => {
         vm.$message({
             message : '로그아웃 되었습니다.',
             type : 'error',
-            duration : 2000,
+            duration : 1000,
         });
         router.replace('/login');
     }).catch(function(error) {

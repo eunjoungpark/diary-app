@@ -2,7 +2,8 @@
     <section class="contents-wrap write-wrap">
         <h3 class="skip">작성</h3>
         <div class="write-bx">
-            <el-form @submit.native="submitData">
+            <!-- @submit.native.prevent="submitData" -->
+            <el-form>
                 <el-form-item label="제목">
                     <el-input v-model="form.title"></el-input>
                     <el-alert title="필수 입력 항목입니다." type="error" v-if="$v.form.title.$error"></el-alert>
@@ -42,22 +43,22 @@
                     <el-upload
                         class="upload-demo"
                         action=""
-                        :on-change="handleChange"
-                        :file-list="form.filelist">
+                        :on-change="handleChange">
                         <el-button size="small" type="primary">Click to upload</el-button>
                         <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="지도">
                     <div class="map">
-                        <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace()" @keydown.prevent class="el-input__inner"></gmap-autocomplete>
+                        <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
+                        <el-alert title="자동완성 항목에서 선택해주세요." type="error" v-if="placeErr"></el-alert>
                         <Gmap-Map :zoom="16" :center="form.center" @click="clickMarker">
-                            <Gmap-Marker :position="form.marker.position" :clickable="false" :draggable="false"></Gmap-Marker>
+                            <Gmap-Marker :position="form.marker.position" :clickable="false" :draggable="false" ></Gmap-Marker>
                         </Gmap-Map>
                     </div>
                 </el-form-item>
                 <el-row class="btn-grp">
-                    <el-button type="primary" native-type="submit">Save</el-button>
+                    <el-button type="primary" @click="submitData">Save</el-button>
                     <el-button type="info">Cancel</el-button>
                 </el-row>
             </el-form>
@@ -89,7 +90,8 @@ export default {
                 filelist : "",
                 writer : null
             },
-            place : null
+            place : null,
+            placeErr : false
         }
     },
     validations : {
@@ -111,8 +113,7 @@ export default {
         GmapMarker : GmapMarker
     },
     computed: {
-        // google: gmapApi,
-       
+        google: gmapApi,       
     },
     methods : {
         //image files
@@ -121,6 +122,12 @@ export default {
         },       
         //map
         setPlace(place) {
+            let hasGeometry = Object.getOwnPropertyDescriptor(place, 'geometry');
+            if(hasGeometry == null || hasGeometry == "undefined"){
+                this.placeErr = true;
+                return;
+            }
+            this.placeErr = false;
             this.place = place;
             this.usePlace();
         },
@@ -128,16 +135,18 @@ export default {
             if (this.place) {
                 const _lat = this.place.geometry.location.lat();
                 const _lng = this.place.geometry.location.lng();
-                this.place = null;
                 this.form.marker.position.lat = _lat;
                 this.form.marker.position.lng = _lng;
                 this.form.center.lat = _lat;
                 this.form.center.lng = _lng;
+                this.place = null;
             }
         },
         clickMarker(e){
             const _lat = e.latLng.lat();
             const _lng = e.latLng.lng();
+            this.form.center.lat = _lat;
+            this.form.center.lng = _lng;
             this.form.marker.position.lat = _lat;
             this.form.marker.position.lng = _lng;
         },
