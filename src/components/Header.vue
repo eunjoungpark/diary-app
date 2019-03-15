@@ -6,7 +6,7 @@
       <ul>
         <router-link tag="li" to="/login" v-if="!user"><a>Login</a></router-link>
         <template v-else>
-          <router-link tag="li" to="/mypage"><a>{{user}}</a></router-link>
+          <li>{{user}}</li>
           <li><a href="#" @click.prevent="logout()">logout</a></li>
         </template>
       </ul>

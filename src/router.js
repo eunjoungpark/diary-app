@@ -19,7 +19,7 @@ export default new Router({
       component : Contents,
       children : [
         {component: List, path: '/'},
-        {component: View, path: '/view/:id'},
+        {component: View, path: '/view/:id', name : 'view'},
         {component: Write, path: '/write'},
         {component: Modify, path: '/modify/:id'}
       ]

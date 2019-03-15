@@ -10,7 +10,8 @@ const vm = new Vue();
 const firebaseGoogle = new firebase.auth.GoogleAuthProvider();
 const firebaseGoogleLogin = () => {
     firebase.auth().signInWithPopup(firebaseGoogle).then(function(result) {
-        loginSuccess();  
+        loginSuccess();
+        router.replace('/');
     }).catch(function(error) {
         let errorMessage = error.message;
         console.log(errorMessage);
@@ -22,6 +23,7 @@ const firebaseFacebook = new firebase.auth.FacebookAuthProvider();
 const firebaseFacebookLogin = () => {
     firebase.auth().signInWithPopup(firebaseFacebook).then(function(result) {
         loginSuccess();
+        router.replace('/');
     }).catch(function(error) {
         var errorMessage = error.message;
         console.log(errorMessage);
@@ -33,6 +35,7 @@ const firebaseLogin = (userData) => {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>{
         firebase.auth().signInWithEmailAndPassword(userData.userEmail, userData.userPasswd).then(()=>{
             loginSuccess();
+            router.replace('/');
         });
     }).catch(function(error) {
         var errorMessage = error.message;

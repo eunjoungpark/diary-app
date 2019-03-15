@@ -86,7 +86,7 @@ export default {
                         lng: 0
                     }
                 },
-                filelist : [],
+                filelist : "",
                 writer : null
             },
             place : null
@@ -157,7 +157,7 @@ export default {
                     message : '등록되었습니다.',
                     type : 'success',
                     center : true,
-                    duration : 2000,
+                    duration : 1000,
                     onClose : this.$store.dispatch('save_diary',diary)
                 });
             }

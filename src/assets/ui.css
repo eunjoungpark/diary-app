@@ -68,7 +68,7 @@ a:focus {color:#d7604e;}
 #header a {color:#fff;}
 #header h1 {float:left;}
 .logo {margin-right:30px;}
-.logo a {font-weight:bold; font-size:21px; font-family:'Pacifico'; line-height:50px;}
+.logo a {font-weight:bold; font-size:18px; font-family:'Pacifico'; line-height:50px;}
 .logo img {width:50px; margin-top:10px; vertical-align:top;}
 .logo img + span {font-size:18px;}
 .logo img + span + span {font-size:16px;}
@@ -77,8 +77,8 @@ a:focus {color:#d7604e;}
 .search-bx input[type="text"] {width:200px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
 .search-bx .search i {font-size:20px; color:#ccc;}
 .top-menu {float:right;}
-.top-menu li {float:left; padding:6px 0;}
-.top-menu li a {display:block; padding:10px 5px; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
+.top-menu li {float:left; padding:16px 0; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
+.top-menu li a {display:block; padding:0 5px; }
 
 /* nav 
 -------------------------------------------------------------------------- */
@@ -109,8 +109,8 @@ a:focus {color:#d7604e;}
 /* list-wrap 
 -------------------------------------------------------------------------- */
 /* no data */
-.no-data {display:none; padding:10px; border:1px dashed #a8a8a8; text-align:center; border-radius:10px; }
-.no-data a {display:block; width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px; box-sizing:border-box;}
+.no-data {padding:10px; border:1px dashed #a8a8a8; text-align:center; border-radius:10px; }
+.no-data button {display:block; width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px; box-sizing:border-box;}
 
 /* list */
 .list-bx {min-height:200px;}
@@ -128,6 +128,7 @@ a:focus {color:#d7604e;}
 
 /* view-wrap
 -------------------------------------------------------------------------- */
+.view-bx {min-height:200px;}
 .view-bx .view-head {padding:20px; background-color:#f7f7f7;}
 .view-bx .view-head .tit {margin-bottom:10px; font-size:21px; color:#000;}
 .view-bx .view-head .status .emotion svg, .view-bx .view-head .status .weather svg {margin-right:5px;}
@@ -138,6 +139,7 @@ a:focus {color:#d7604e;}
 .view-bx .view-head .btn-ico {margin-right:5px; background-color:#fff;}
 .view-bx .view-head .btn-ico:hover {color:#d7604e;}
 .view-bx .view-cont {padding:20px; line-height:1.8;}
+.view-bx .view-cont .text {white-space:pre;}
 .view-bx .view-cont .map {margin-top:50px;}
 
 /* element.io style */

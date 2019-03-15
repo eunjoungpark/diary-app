@@ -4,7 +4,7 @@ import axios from 'axios'
 import router from './router'
 import _ from 'lodash'
 import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseUser, firebaseLogout} from './rest/auth'
-import {writeDiary, fetchDiaries, fetchDiary} from './rest/database'
+import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary} from './rest/database'
 Vue.use(Vuex);
 Vue.use(_);
 
@@ -21,6 +21,12 @@ export default new Vuex.Store({
     set_user(state, user){
       state.user = user.email;
       state.uid = user.uid;
+    },
+    set_diaries(state, diaries){
+      state.diaries = diaries;
+    },
+    set_diary(state, diary){
+      state.diary = diary;
     }
   },
   actions: {
@@ -44,7 +50,6 @@ export default new Vuex.Store({
       auth.onAuthStateChanged((user)=>{
         if(user !== null){
           commit('set_user',user);
-          router.replace('/');
         }else{
           commit('set_user',{
             email : null,
@@ -59,9 +64,19 @@ export default new Vuex.Store({
         email : null,
         uid : null
       });
+      commit('set_diaries', null);
+      commit('set_diary', null);
     },
-    save_diary({state, dispatch}, formData){ //For Write : save a diary
+    save_diary({state}, formData){ //For Write : save a diary
       writeDiary(state.uid, formData);
+      router.push('/');
+    },
+    update_diary ({state}, updateData){
+      updateDiary(state.uid, updateData.diaryId, updateData.formData);
+      router.push({name:'view', params : {id : updateData.diaryId}});
+    },
+    delete_diary ({state}, updateData){
+      deleteDiary(state.uid, updateData);
       router.push('/');
     },
     fetch_diaries({dispatch}){ //For List : get diaries step1
@@ -84,16 +99,16 @@ export default new Vuex.Store({
     },    
     get_diaries({commit, state},diaries){ //For List : get diaries step2
       if(diaries !== null){
-        state.diaries = diaries;
+        commit('set_diaries', diaries);
       }else {
-        state.diaries = null;
+        commit('set_diaries', null);
       }
     },
-    get_diary({commit, state},diary){ //For List : get diary step2
+    get_diary({commit, state}, diary){ //For List : get diary step2
       if(diary !== null){
-        state.diary = diary;
+        commit('set_diary', diary);
       }else {
-        state.diary = null;
+        commit('set_diary', null);
       }
     }
   },

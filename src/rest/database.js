@@ -9,8 +9,19 @@ const writeDiary = (uid, formData) => {
     let updates = {};
     updates['/diary/' + uid + '/' + newDiaryKey] = formData;
     return firebase.database().ref().update(updates);
-}
+};
 
+//글수정
+const updateDiary = (uid, diaryId, formData) => {
+   firebase.database().ref().child('diary/' + uid + "/" + diaryId).set(formData);
+};
+
+//글삭제
+const deleteDiary = (uid, diaryId) => {
+    firebase.database().ref().child('diary/' + uid + "/" + diaryId).remove();
+ };
+
+//글목록
 const fetchDiaries = (uid) =>{
     if(!uid) {
         return;
@@ -19,8 +30,9 @@ const fetchDiaries = (uid) =>{
     diariesDB.on("value", snap=>{
         store.dispatch('get_diaries', snap.val());
     });
-}
+};
 
+//한개의 글
 const fetchDiary = (uid, diaryId) =>{
     if(!uid) {
         return;
@@ -30,10 +42,12 @@ const fetchDiary = (uid, diaryId) =>{
     diaryDB.on("value", snap=>{
         store.dispatch('get_diary', snap.val());
     });
-}
+};
 
 export {
     writeDiary,
+    updateDiary,
     fetchDiaries,
-    fetchDiary
+    fetchDiary,
+    deleteDiary
 }
