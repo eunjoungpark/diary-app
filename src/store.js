@@ -60,8 +60,9 @@ export default new Vuex.Store({
       writeDiary(state.uid, formData);
       router.push('/');
     },
-    getDiary(contxt, uid){
-      fetchDiary(uid);
+    getDiary(context){
+      console.log(context.state.uid)
+      fetchDiary(context.state.uid);
     }
   },
   getters : {

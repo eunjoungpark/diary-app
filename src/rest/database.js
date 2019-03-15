@@ -3,18 +3,21 @@ const database = firebase.database();
 
 //글작성
 const writeDiary = (uid, formData) => {
-    let newPostKey = {};
-    newPostKey.key = firebase.database().ref().child('diary').push().key;
-    newPostKey.date = new Date();
-    let updates = {};
-    updates['/diary/' + uid + '/' + newPostKey] = formData;
-    return firebase.database().ref().update(updates);
+    console.log(uid);
+    // let newPostKey = {};
+    // newPostKey = firebase.database().ref().child('diary').push().key;
+    // newPostKey.date = new Date();
+    // let updates = {};
+    // updates['/diary/' + uid + '/' + newPostKey] = formData;
+    // return firebase.database().ref().update(updates);
+    firebase.database().ref().child('diary/'+uid).set('test');
 }
 
 const fetchDiary = (uid) =>{
-    let newPostKey = firebase.database().ref('diary/'+ uid).limitToLast(100);
-    // let getDiary = firebase.database().ref('diary/');
-    console.log(newPostKey);
+    console.log(uid);
+    let newPostKey = firebase.database().ref();
+    let diary = newPostKey.child('diary/' +uid);
+    //diary.on("value",snap=>console.log(snap.val()));
 }
 
 export {

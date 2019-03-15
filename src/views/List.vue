@@ -41,9 +41,10 @@
 
 <script>
 export default {
-  created (){
-    this.$store.dispatch('getDiary');
-  }
+  // created (){
+  //   console.log(this.$store.getters.uid)
+  //   //this.$store.dispatch('getDiary');
+  // }
 }
 </script>
 
