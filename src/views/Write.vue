@@ -39,15 +39,20 @@
                         <el-radio label="wind" class="wind"><icon name="wind" scale="1.3" /> <span class="label">바람</span></el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="이미지">
-                    <el-upload
-                        class="upload-demo"
-                        action=""
-                        :on-change="handleChange">
-                        <el-button size="small" type="primary">Click to upload</el-button>
-                        <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-                    </el-upload>
-                </el-form-item>
+                <div class="el-form-item">
+                    <label class="el-form-item__label">이미지</label>
+                    <div class="el-form-item__content">
+                        <div class="upload-demo">
+                            <div tabindex="0" class="el-upload el-upload--text">
+                                <input type="file" name="이미지" @change="uploadImage">
+                            </div>
+                            <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+                            <ul class="el-upload-list el-upload-list--text">
+                                <li v-for="(file, index) in form.filelist" :key="index">{{file}} <button type="button" @click="deleteImage(index)">X</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <el-form-item label="지도">
                     <div class="map">
                         <gmap-autocomplete placeholder="위치를 검색하세요" @place_changed="setPlace" class="el-input__inner"></gmap-autocomplete>
@@ -87,11 +92,12 @@ export default {
                         lng: 0
                     }
                 },
-                filelist : "",
+                filelist : [],
                 writer : null
             },
             place : null,
-            placeErr : false
+            placeErr : false,
+            fullPathFiles : [],
         }
     },
     validations : {
@@ -117,8 +123,19 @@ export default {
     },
     methods : {
         //image files
-        handleChange(file, fileList) {
-            this.filelist = fileList.slice(-3);   
+       uploadImage(e){
+            let file = e.target.files[0];
+            if(this.form.filelist.length < 5){
+                this.fullPathFiles.push(file);
+                this.form.filelist.push(file.name);
+            }else {
+                console.log("최대 5장까지 업로드 가능");
+            }
+            e.target.value = "";
+        },
+        deleteImage (idx){
+            this.form.filelist.splice(idx,1);
+            this.fullPathFiles.splice(idx,1);
         },       
         //map
         setPlace(place) {
@@ -167,7 +184,7 @@ export default {
                     type : 'success',
                     center : true,
                     duration : 1000,
-                    onClose : this.$store.dispatch('save_diary',diary)
+                    onClose : this.$store.dispatch('save_diary',{files : this.fullPathFiles, diary : diary})
                 });
             }
         }

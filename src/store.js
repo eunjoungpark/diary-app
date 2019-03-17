@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from './router'
 import _ from 'lodash'
-import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseUser, firebaseLogout} from './rest/auth'
-import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary} from './rest/database'
+import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout} from './rest/auth'
+import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageUpload} from './rest/database'
 Vue.use(Vuex);
 Vue.use(_);
 
@@ -67,11 +67,11 @@ export default new Vuex.Store({
       commit('set_diary', null);
     },
     save_diary({state}, formData){ //For Write : save a diary
-      writeDiary(state.uid, formData);
+      writeDiary(state.uid, formData.files, formData.diary);
       router.push('/');
     },
     update_diary ({state}, updateData){
-      updateDiary(state.uid, updateData.diaryId, updateData.formData);
+      updateDiary(state.uid, updateData.diaryId, updateData.files, updateData.deleteFiles, updateData.formData);
       router.push({name:'view', params : {id : updateData.diaryId}});
     },
     delete_diary ({state}, updateData){

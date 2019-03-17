@@ -1,24 +1,31 @@
 import './apikey';
 import store from '../store'
 const database = firebase.database();
+const storage = firebase.storage();
 
 //글작성
-const writeDiary = (uid, formData) => {
+const writeDiary = (uid, files, formData) => {
     let newDiaryKey = {};
-    newDiaryKey = firebase.database().ref().child('diary').push().key;
+    newDiaryKey = database.ref().child('diary').push().key;
+    if(files.length > 0) {
+        imageUpload(uid, newDiaryKey, files);
+    }
     let updates = {};
     updates['/diary/' + uid + '/' + newDiaryKey] = formData;
-    return firebase.database().ref().update(updates);
+    return database.ref().update(updates);
 };
 
 //글수정
-const updateDiary = (uid, diaryId, formData) => {
-   firebase.database().ref().child('diary/' + uid + "/" + diaryId).set(formData);
+const updateDiary = (uid, diaryId, files, deletefiles, formData) => {
+    if(formData.filelist.length > 0) {
+        imageUpload(uid, diaryId, files);
+    }
+    database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
 };
 
 //글삭제
 const deleteDiary = (uid, diaryId) => {
-    firebase.database().ref().child('diary/' + uid + "/" + diaryId).remove();
+    database.ref().child('diary/' + uid + "/" + diaryId).remove();
  };
 
 //글목록
@@ -26,7 +33,7 @@ const fetchDiaries = (uid) =>{
     if(!uid) {
         return;
     }
-    const diariesDB = firebase.database().ref().child('diary/' + uid);
+    const diariesDB = database.ref().child('diary/' + uid);
     diariesDB.on("value", snap=>{
         store.dispatch('get_diaries', snap.val());
     });
@@ -37,17 +44,50 @@ const fetchDiary = (uid, diaryId) =>{
     if(!uid) {
         return;
     }
-    const diariesDB = firebase.database().ref().child('diary/' + uid);
+    const diariesDB = database.ref().child('diary/' + uid);
     const diaryDB = diariesDB.child(`${diaryId}`);
     diaryDB.on("value", snap=>{
         store.dispatch('get_diary', snap.val());
     });
 };
 
+//이미지 업로드
+const imageUpload = (uid, diaryId, files) => {
+    files.forEach((file)=>{
+        var storageRef = storage.ref('uploads/'+ uid + '/' + diaryId + "/" + file.name);
+        var taskImg = storageRef.put(file);
+        
+        taskImg.on("state_changed", (snap) => {
+            //var percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
+            //console.log(percentage);
+        },
+        (err)=>{
+            console.log(err);
+        },
+        () => {
+            console.log("success");
+        });
+    }); 
+}
+
+//이미지 삭제
+const imageDelete = (uid, diaryId, files) =>{
+    files.forEach((file)=>{
+        let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + file.name);
+        storageRef.delete().then(function() {
+            console.log("success");
+        }).catch(function(error) {
+            console.log(error.message)
+        });
+    })
+}
+
 export {
     writeDiary,
     updateDiary,
     fetchDiaries,
     fetchDiary,
-    deleteDiary
+    deleteDiary,
+    imageUpload,
+    imageDelete
 }
