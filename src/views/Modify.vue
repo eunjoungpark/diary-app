@@ -127,6 +127,7 @@ export default {
     computed : {
         diary (){
             if(this.$store.getters.diary != null){
+                //console.log(this.$store.getters.diary);
                 this.form.title = this.$store.getters.diary.title;
                 this.form.desc = this.$store.getters.diary.desc;
                 this.form.evtDate = this.$store.getters.diary.evtDate;
@@ -157,7 +158,7 @@ export default {
                 beforeClose: (action, instance, done) => {
                     if(action === 'confirm'){
                         this.savelist.splice(idx, 1);
-                        const diary = this.form;
+                        let diary = {...this.form};
                         diary.writeDate = new Date();
                         diary.filelist = [...this.savelist, ...this.form.filelist];
                         if(this.$store.getters.uid && this.$v.form.title.required && this.$v.form.desc.required && this.$v.form.evtDate.required){
@@ -238,6 +239,7 @@ export default {
             if(this.$v.form.title.required && this.$v.form.desc.required && this.$v.form.evtDate.required){
                 const diary = this.form;
                 diary.writeDate = new Date();
+                diary.filelist = [...this.savelist, ...this.form.filelist];
                 this.$message({
                     message : '수정되었습니다.',
                     type : 'success',
