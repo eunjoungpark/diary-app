@@ -71,10 +71,10 @@ const imageUpload = (uid, diaryId, files) => {
 }
 
 //이미지 삭제
-const imageDelete = (uid, diaryId, filename) =>{
-    console.log(uid, diaryId, filename);
+const imageDelete = (uid, diaryId, filename, formData) =>{
     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + filename);
     storageRef.delete().then(function() {
+        database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
         console.log("success");
     }).catch(function(error) {
         console.log(error.message)

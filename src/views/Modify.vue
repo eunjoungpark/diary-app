@@ -51,6 +51,7 @@
                                 <li v-for="(file, index) in savelist" :key="index">{{file}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
                                 <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>
                             </ul>
+                            {{savelist}}
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@ export default {
         diary (){
             if(this.$store.getters.diary != null){
                 this.form = this.$store.getters.diary
-                this.savelist = this.form.filelist;
+                this.savelist = [...this.form.filelist];
                 this.form.filelist = [];
                 return this.form;
             }
@@ -140,13 +141,23 @@ export default {
             this.fullPathFiles.splice(idx,1);
         },
         deleteDirectImage (filename, idx){
-            this.$confirm('저장되었던 이미지 삭제시 복원되지 않습니다. 삭제하시겠습니까?', 'Warning', {
+             this.$confirm('저장되었던 이미지 삭제시 복원되지 않습니다. 삭제하시겠습니까?', 'Warning', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
-                type: 'warning'
-            }).then(() => {
-                this.savelist.splice(idx, 1);
-                this.$store.dispatch('delete_image', {diaryId : this.$route.params.id, filename});
+                type: 'warning',
+                beforeClose: (action, instance, done) => {
+                    if(action === 'confirm'){
+                        this.savelist.splice(idx, 1);
+                        const diary = this.form;
+                        diary.writeDate = new Date();
+                        diary.filelist = [...this.savelist, ...this.form.filelist];
+                        if(this.$store.getters.uid && this.$v.form.title.required && this.$v.form.desc.required && this.$v.form.evtDate.required){
+                            this.$store.dispatch('delete_image', {diaryId : this.$route.params.id, filename, diary});
+                        }
+                        done();
+                    }                    
+                }
+            }).then(() => {                
                 this.$message({
                     type: 'success',
                     message: '삭제되었습니다.'
