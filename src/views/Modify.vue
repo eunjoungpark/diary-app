@@ -51,7 +51,6 @@
                                 <li v-for="(file, index) in savelist" :key="index">{{file}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
                                 <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>
                             </ul>
-                            {{savelist}}
                         </div>
                     </div>
                 </div>
@@ -129,7 +128,11 @@ export default {
         diary (){
             if(this.$store.getters.diary != null){
                 this.form = this.$store.getters.diary
-                this.savelist = [...this.form.filelist];
+                let result = Object.keys(this.form).filter(item => {return item == 'filelist'});
+                if(result.length > 0){
+                    this.savelist = [...this.form.filelist];
+                    this.form.filelist = [];
+                }
                 this.form.filelist = [];
                 return this.form;
             }
@@ -172,14 +175,13 @@ export default {
         //image files
         uploadImage(e){
             let file = e.target.files[0];
-            let result = this.form.filelist.filter((item)=>{return item == file.name}) + this.savelist.filter((item)=>{return item == file.name});
+            let result = this.form.filelist.filter((item)=>{return item == file.name}).length + this.savelist.filter((item)=>{return item == file.name}).length;
             e.target.value = "";
 
             if(this.form.filelist.length >= 5){
                 return;
             }
-
-            if(result.length > 0) {
+            if(result > 0) {
                 this.overlap = true;
                 return;
             }

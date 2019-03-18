@@ -17,7 +17,7 @@ const writeDiary = (uid, files, formData) => {
 
 //글수정
 const updateDiary = (uid, diaryId, files, formData) => {
-    if(formData.filelist.length > 0) {
+    if(files.length > 0) {
         imageUpload(uid, diaryId, files);
     }
     database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
@@ -74,6 +74,8 @@ const imageUpload = (uid, diaryId, files) => {
 const imageDelete = (uid, diaryId, filename, formData) =>{
     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + filename);
     storageRef.delete().then(function() {
+        console.log(uid, diaryId, filename);
+        console.log(formData);
         database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
         console.log("success");
     }).catch(function(error) {
