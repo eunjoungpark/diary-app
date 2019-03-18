@@ -47,9 +47,9 @@
                             </div>
                             <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
                             <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
-                            <ul class="file-list">
+                            <ul class="file-list">          
                                 <li v-for="(file, index) in savelist" :key="index">{{file}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
-                                <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>
+                                <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>                               
                             </ul>
                         </div>
                     </div>
@@ -127,13 +127,19 @@ export default {
     computed : {
         diary (){
             if(this.$store.getters.diary != null){
-                this.form = this.$store.getters.diary
-                let result = Object.keys(this.form).filter(item => {return item == 'filelist'});
+                this.form.title = this.$store.getters.diary.title;
+                this.form.desc = this.$store.getters.diary.desc;
+                this.form.evtDate = this.$store.getters.diary.evtDate;
+                this.form.emotion = this.$store.getters.diary.emotion;
+                this.form.weather = this.$store.getters.diary.weather;
+                this.form.center = this.$store.getters.diary.center;
+                this.form.marker = this.$store.getters.diary.marker;
+                this.form.writer = this.$store.getters.diary.writer;
+
+                let result = Object.keys(this.$store.getters.diary).filter(item => {return item == 'filelist'});
                 if(result.length > 0){
-                    this.savelist = [...this.form.filelist];
-                    this.form.filelist = [];
+                    this.savelist = this.$store.getters.diary.filelist;
                 }
-                this.form.filelist = [];
                 return this.form;
             }
         }
@@ -181,6 +187,7 @@ export default {
             if(this.form.filelist.length >= 5){
                 return;
             }
+            
             if(result > 0) {
                 this.overlap = true;
                 return;
