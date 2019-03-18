@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import router from './router'
 import _ from 'lodash'
 import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout} from './rest/auth'
-import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageDelete} from './rest/database'
+import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageDelete, imageDownload} from './rest/database'
 Vue.use(Vuex);
 Vue.use(_);
 
@@ -14,7 +14,8 @@ export default new Vuex.Store({
     user : null,
     uid : null,
     diaries : null,
-    diary : null
+    diary : null,
+    viewFileList : []
   },
   mutations: {
     set_user(state, user){
@@ -112,6 +113,9 @@ export default new Vuex.Store({
     },
     delete_image({state}, formData){
       imageDelete(state.uid, formData.diaryId, formData.filename, formData.diary);
+    },
+    download_image ({state}, imageData){
+      state.viewFileList = imageDownload(state.uid, imageData.diaryId, imageData.files);
     }
   },
   getters : {
@@ -126,6 +130,9 @@ export default new Vuex.Store({
     },
     diary (state){
       return state.diary
+    },
+    viewFileList (state){
+      return state.viewFileList;
     }
   }
 })

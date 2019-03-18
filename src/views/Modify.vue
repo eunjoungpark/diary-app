@@ -127,7 +127,6 @@ export default {
     computed : {
         diary (){
             if(this.$store.getters.diary != null){
-                //console.log(this.$store.getters.diary);
                 this.form.title = this.$store.getters.diary.title;
                 this.form.desc = this.$store.getters.diary.desc;
                 this.form.evtDate = this.$store.getters.diary.evtDate;

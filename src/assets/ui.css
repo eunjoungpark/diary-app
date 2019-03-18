@@ -141,6 +141,8 @@ a:focus {color:#d7604e;}
 .view-bx .view-cont {padding:20px; line-height:1.8;}
 .view-bx .view-cont .text {white-space:pre;}
 .view-bx .view-cont .map {margin-top:50px;}
+.view-bx .view-cont .carousel-bx {margin-bottom:50px;}
+.view-bx .view-cont .carousel-bx img {width:100%;}
 
 /* element.io style */
 .write-bx .el-radio {margin-right:20px; text-align:center; white-space:normal;}

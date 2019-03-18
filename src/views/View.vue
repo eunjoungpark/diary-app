@@ -17,10 +17,10 @@
                 </div>
                 <div class="view-cont">
                     <!--// 사진첩 -->
-                    <el-carousel :interval="4000" type="card" class="carousel" v-if="diary.filelist != ''">
-                        <el-carousel-item v-for="item in 1" :key="item">
-                            <div><img src="" /> 
-                            <strong class="skip">{{ item }}</strong></div>
+                    <el-carousel :interval="5000" arrow="always" class="carousel-bx" v-if="viewFileList != 0">
+                        <el-carousel-item v-for="(item,index) in viewFileList" :key="index">
+                            <div><img :src="item" alt="" /> </div>
+                            <!-- <strong class="skip">{{item}}</strong></div> -->
                         </el-carousel-item>
                     </el-carousel>
                     <!-- 사진첩 //-->
@@ -45,7 +45,9 @@ import {Map, Marker} from 'vue2-google-maps'
 export default {
     data(){
         return {
-            loading : true
+            loading : true,
+            hasFiles : false,
+            fileLen : 0
         }
     },
     components : {
@@ -58,9 +60,21 @@ export default {
     computed : {
         diary (){
             if(this.$store.getters.diary != null){
+                let diary = this.$store.getters.diary;
                 this.loading = false;
+                if(Object.keys(diary).filter(item=>{return item == 'filelist'}).length > 0){
+                    this.$store.dispatch('download_image', {diaryId:this.$route.params.id, files: diary['filelist']});
+                    this.hasFiles = true;
+                }
                 return this.$store.getters.diary;
             }
+        },
+        viewFileList(){
+            if(this.$store.getters.viewFileList.length != 0){
+                this.fileLen = this.$store.getters.viewFileList.length;
+                return this.$store.getters.viewFileList;
+            }
+            return 0;
         }
     },
     methods : {
