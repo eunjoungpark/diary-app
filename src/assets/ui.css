@@ -92,7 +92,7 @@ a:focus {color:#d7604e;}
 
 /* contents
 -------------------------------------------------------------------------- */
-.el-alert {margin-top:10px !important;}
+.el-alert {margin-top:10px !important; line-height:100%;}
 
 /* login & join
 -------------------------------------------------------------------------- */
@@ -152,6 +152,9 @@ a:focus {color:#d7604e;}
 .write-bx .el-form-item .el-textarea__inner {min-height:200px !important;}
 .write-bx .el-col-2 {text-align:center;}
 .write-bx .map .vue-map-container {width:438px; margin-top:10px;}
+.write-bx .el-upload__tip {line-height:21px; color:#d77869;}
+.write-bx .file-list {font-size:12px; color:#ccc; line-height:24px;}
+.write-bx .file-list button {margin-left:5px; color:#ccc;}
 
 /* .vue-map-container */
 .vue-map-container {width:478px; height:300px;}

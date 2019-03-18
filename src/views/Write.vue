@@ -43,12 +43,13 @@
                     <label class="el-form-item__label">이미지</label>
                     <div class="el-form-item__content">
                         <div class="upload-demo">
-                            <div tabindex="0" class="el-upload el-upload--text">
-                                <input type="file" name="이미지" @change="uploadImage">
+                            <div tabindex="0" class="el-input">
+                                <input type="file" name="이미지" class="el-input__inner" @change="uploadImage">
                             </div>
-                            <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-                            <ul class="el-upload-list el-upload-list--text">
-                                <li v-for="(file, index) in form.filelist" :key="index">{{file}} <button type="button" @click="deleteImage(index)">X</button></li>
+                            <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
+                            <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
+                            <ul class="file-list">
+                                <li v-for="(file, index) in form.filelist" :key="index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>
                             </ul>
                         </div>
                     </div>
@@ -74,7 +75,7 @@
 <script>
 import {gmapApi} from 'vue2-google-maps'
 import GmapMarker from 'vue2-google-maps/src/components/marker'
-import {required, maxLength} from 'vuelidate/lib/validators'
+import {required, maxLength, unique} from 'vuelidate/lib/validators'
 
 export default {
     data(){
@@ -98,6 +99,7 @@ export default {
             place : null,
             placeErr : false,
             fullPathFiles : [],
+            overlap : false
         }
     },
     validations : {
@@ -122,20 +124,27 @@ export default {
         google: gmapApi,       
     },
     methods : {
-        //image files
-       uploadImage(e){
-            let file = e.target.files[0];
-            if(this.form.filelist.length < 5){
-                this.fullPathFiles.push(file);
-                this.form.filelist.push(file.name);
-            }else {
-                console.log("최대 5장까지 업로드 가능");
-            }
-            e.target.value = "";
-        },
         deleteImage (idx){
             this.form.filelist.splice(idx,1);
             this.fullPathFiles.splice(idx,1);
+        },
+        //image files
+        uploadImage(e){
+            let file = e.target.files[0];
+            let result = this.form.filelist.filter((item)=>{return item == file.name});
+            e.target.value = "";
+
+            if(this.form.filelist.length >= 5){
+                return;
+            }
+
+            if(result.length > 0) {
+                this.overlap = true;
+                return;
+            }
+            this.overlap = false;
+            this.form.filelist.push(file.name);
+            this.fullPathFiles.push(file);
         },       
         //map
         setPlace(place) {

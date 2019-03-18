@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import router from './router'
 import _ from 'lodash'
 import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout} from './rest/auth'
-import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageUpload} from './rest/database'
+import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageDelete} from './rest/database'
 Vue.use(Vuex);
 Vue.use(_);
 
@@ -71,7 +71,7 @@ export default new Vuex.Store({
       router.push('/');
     },
     update_diary ({state}, updateData){
-      updateDiary(state.uid, updateData.diaryId, updateData.files, updateData.deleteFiles, updateData.formData);
+      updateDiary(state.uid, updateData.diaryId, updateData.files, updateData.formData);
       router.push({name:'view', params : {id : updateData.diaryId}});
     },
     delete_diary ({state}, updateData){
@@ -109,6 +109,9 @@ export default new Vuex.Store({
       }else {
         commit('set_diary', null);
       }
+    },
+    delete_image({state}, filename){
+      imageDelete(state.uid, state.diaryId, filename);
     }
   },
   getters : {

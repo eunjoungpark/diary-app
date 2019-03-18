@@ -16,7 +16,7 @@ const writeDiary = (uid, files, formData) => {
 };
 
 //글수정
-const updateDiary = (uid, diaryId, files, deletefiles, formData) => {
+const updateDiary = (uid, diaryId, files, formData) => {
     if(formData.filelist.length > 0) {
         imageUpload(uid, diaryId, files);
     }
@@ -71,15 +71,13 @@ const imageUpload = (uid, diaryId, files) => {
 }
 
 //이미지 삭제
-const imageDelete = (uid, diaryId, files) =>{
-    files.forEach((file)=>{
-        let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + file.name);
-        storageRef.delete().then(function() {
-            console.log("success");
-        }).catch(function(error) {
-            console.log(error.message)
-        });
-    })
+const imageDelete = (uid, diaryId, filename) =>{
+    let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + filename);
+    storageRef.delete().then(function() {
+        console.log("success");
+    }).catch(function(error) {
+        console.log(error.message)
+    });
 }
 
 export {

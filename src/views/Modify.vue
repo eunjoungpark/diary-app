@@ -42,12 +42,14 @@
                     <label class="el-form-item__label">이미지</label>
                     <div class="el-form-item__content">
                         <div class="upload-demo">
-                            <div tabindex="0" class="el-upload el-upload--text">
-                                <input type="file" name="이미지" @change="uploadImage">
+                            <div tabindex="0" class="el-input">
+                                <input type="file" name="이미지" class="el-input__inner" @change="uploadImage">
                             </div>
-                            <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-                            <ul class="el-upload-list el-upload-list--text">
-                                <li v-for="(file, index) in form.filelist" :key="index">{{file}} <button type="button" @click="deleteImage(index)">X</button></li>
+                            <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
+                            <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
+                            <ul class="file-list">
+                                <li v-for="(file, index) in savelist" :key="index">{{file}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
+                                <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>
                             </ul>
                         </div>
                     </div>
@@ -97,7 +99,8 @@ export default {
             place : null,
             placeErr : false,
             fullPathFiles : [],
-            deleteFiles : []
+            overlap : false,
+            savelist : []
         }
     },
     validations : {
@@ -125,26 +128,54 @@ export default {
         diary (){
             if(this.$store.getters.diary != null){
                 this.form = this.$store.getters.diary
+                this.savelist = this.form.filelist;
+                this.form.filelist = [];
                 return this.form;
             }
         }
     },
     methods : {
-        //image files
-        uploadImage(e){
-            let file = e.target.files[0];
-            if(this.form.filelist.length < 5){
-                this.fullPathFiles.push(file);
-                this.form.filelist.push(file.name);
-            }else {
-                console.log("최대 5장까지 업로드 가능");
-            }
-            e.target.value = "";
-        },
         deleteImage (idx){
             this.form.filelist.splice(idx,1);
             this.fullPathFiles.splice(idx,1);
-        },    
+        },
+        deleteDirectImage (filename, idx){
+            this.$confirm('저장되었던 이미지 삭제시 복원되지 않습니다. 삭제하시겠습니까?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+            }).then(() => {
+                this.savelist.splice(idx, 1);
+                this.$store.dispatch('delete_image', filename);
+                this.$message({
+                    type: 'success',
+                    message: '삭제되었습니다.'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '취소하였습니다.'
+                });
+            });
+        },
+        //image files
+        uploadImage(e){
+            let file = e.target.files[0];
+            let result = this.form.filelist.filter((item)=>{return item == file.name}) + this.savelist.filter((item)=>{return item == file.name});
+            e.target.value = "";
+
+            if(this.form.filelist.length >= 5){
+                return;
+            }
+
+            if(result.length > 0) {
+                this.overlap = true;
+                return;
+            }
+            this.overlap = false;
+            this.form.filelist.push(file.name);
+            this.fullPathFiles.push(file);
+        },
         //map
         setPlace(place) {
             let hasGeometry = Object.getOwnPropertyDescriptor(place, 'geometry');
@@ -192,7 +223,7 @@ export default {
                     type : 'success',
                     center : true,
                     duration : 1000,
-                    onClose : this.$store.dispatch('update_diary', {diaryId : this.$route.params.id, files : this.fullPathFiles, deleteFiles: deleteFiles, formData : diary})
+                    onClose : this.$store.dispatch('update_diary', {diaryId : this.$route.params.id, files : this.fullPathFiles, formData : diary})
                 });
             }
         }
