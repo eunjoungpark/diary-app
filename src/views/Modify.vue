@@ -146,7 +146,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.savelist.splice(idx, 1);
-                this.$store.dispatch('delete_image', filename);
+                this.$store.dispatch('delete_image', {diaryId : this.$route.params.id, filename});
                 this.$message({
                     type: 'success',
                     message: '삭제되었습니다.'

@@ -72,6 +72,7 @@ const imageUpload = (uid, diaryId, files) => {
 
 //이미지 삭제
 const imageDelete = (uid, diaryId, filename) =>{
+    console.log(uid, diaryId, filename);
     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + filename);
     storageRef.delete().then(function() {
         console.log("success");

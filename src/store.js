@@ -110,8 +110,8 @@ export default new Vuex.Store({
         commit('set_diary', null);
       }
     },
-    delete_image({state}, filename){
-      imageDelete(state.uid, state.diaryId, filename);
+    delete_image({state}, file){
+      imageDelete(state.uid, file.diaryId, file.filename);
     }
   },
   getters : {
