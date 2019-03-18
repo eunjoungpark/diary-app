@@ -74,9 +74,8 @@ const imageUpload = (uid, diaryId, files) => {
 const imageDelete = (uid, diaryId, filename, formData) =>{
     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + "/" + filename);
     storageRef.delete().then(function() {
-        console.log(uid, diaryId, filename);
-        console.log(formData);
         database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
+        fetchDiary(uid, diaryId);
         console.log("success");
     }).catch(function(error) {
         console.log(error.message)

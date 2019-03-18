@@ -111,7 +111,7 @@ export default new Vuex.Store({
       }
     },
     delete_image({state}, formData){
-      imageDelete(state.uid, formData.diaryId, formData.diary);
+      imageDelete(state.uid, formData.diaryId, formData.filename, formData.diary);
     }
   },
   getters : {
