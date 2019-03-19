@@ -6,7 +6,7 @@
     <!--// list -->
     <div class="list-bx" v-loading="loading" element-loading-text="Loading..."  element-loading-spinner="el-icon-loading">
         <ul v-if="diaries != null">
-          <li v-for = "(diary, key, index) in diaryData" :key="index" :id="key" class="list-cell clear">
+          <li v-for = "(diary, key, index) in diaries" :key="index" :id="key" class="list-cell clear">
             <p class="list-img">
               <!-- <template v-if="listFileList[index] != null"><img :src="listFileList[index]" alt="index" /></template> -->
               <!-- <template v-else><span class="no-img">no image</span></template> -->
@@ -38,7 +38,7 @@ export default {
       loading: true,
       fileLen : 0,
       diaryData : null,
-      files : this.$store.getters.listFileList
+      // files : this.$store.getters.listFileList
     }
   },
   created (){
@@ -48,13 +48,13 @@ export default {
     diaries (){
       if(this.$store.getters.diaries != null){
         this.loading = false;
-        this.diaryData = {...this.$store.getters.diaries};
-        console.log(this.files);
+        // this.diaryData = {...this.$store.getters.diaries};
+        // console.log(this.files);
         return this.$store.getters.diaries;
       }
     },
     listFileList(){
-      return this.$store.getters.listFileList;
+      // return this.$store.getters.listFileList;
     }
   },
   methods:{
@@ -84,4 +84,18 @@ export default {
     }
   }
 }
+// const waitFor = (ms) => new Promise(r => setTimeout(r('success'), ms));
+// async function asyncForEach(array, callback) {
+//   for (let index = 0; index < array.length; index++) {
+//     await callback(array[index], index, array);
+//   }
+// }
+// const start = async () => {
+//   await asyncForEach([1, 2, 3], async (num) => {
+//     let result = await waitFor(7000);
+//     console.log(result);
+//   });
+//   console.log('Done');
+// }
+// start();
 </script>
