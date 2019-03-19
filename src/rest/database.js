@@ -35,21 +35,26 @@ const fetchDiaries = (uid) =>{
     }
     const diariesDB = database.ref().child('diary/' + uid);
     diariesDB.on("value", snap=>{
-        const diaries = snap.val();
-        Object.keys(diaries).forEach(item=>{
-            if(Object.keys(diaries[item]).filter(file=>{return file == 'filelist'}).length > 0){
-                //diaries[item].thumnail = await
-                let thumList =  new Promise((resolve, reject)=>{
-                    let thumnail = imageDownload(uid, item, diaries[item]['filelist'][0]);
-                    resolve(thumnail);
-                })
-                thumList.then(res=>{
-                    console.log(res);
-                })
-            }
-        });
+        // Object.keys(diaries).forEach(item=>{
+        //     diaries[item].thumnail = null;
+        //     if(Object.keys(diaries[item]).filter(file=>{return file == 'filelist'}).length > 0){
+        //         returnUrl(item).then(res=>{
+        //             diaries[item].thumnail = res;
+        //         }).catch(err=>{
+        //             console.log("error");
+        //         });                
+        //     }
+        // });
         
-       store.dispatch('get_diaries', snap.val());
+        // async function returnUrl(diaryId) {
+        //     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId);
+        //     let storageChildRef = storageRef.child("/"+ diaries[diaryId]['filelist'][0]);
+        //     let result = await storageChildRef.getDownloadURL().then(url=>{
+        //         return url;
+        //     });
+        //     return result;
+        // };        
+        store.dispatch('get_diaries', snap.val());
     });
 };
 
@@ -99,25 +104,37 @@ const imageDelete = (uid, diaryId, filename, formData) =>{
 //이미지다운로드
 const imageDownload = (uid, diaryId, files) =>{
     let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId);
-    if(typeof files === 'object') {
-        let filelist = [];
-        files.forEach(item=>{
-            let storageChildRef = storageRef.child("/"+ item);
-            storageChildRef.getDownloadURL().then(url=>{
-                filelist.push(url);
-            }).catch(err=>{
-                console.log(err);
-            })
-        })
-        return filelist;
-    }else {
-        let storageChildRef = storageRef.child("/"+ files);
+    let filelist = [];
+    files.forEach(item=>{
+        let storageChildRef = storageRef.child("/"+ item);
         storageChildRef.getDownloadURL().then(url=>{
-            return url;
+            filelist.push(url);
         }).catch(err=>{
             console.log(err);
         })
-    }    
+    })
+    return filelist;    
+}
+
+//이미지다운로드
+const imagesDownload = (uid, files) =>{
+    let filelist = [];
+    const returnImages = async ()=>{
+        await files.forEach(async(item, index)=>{
+            let storageRef = storage.ref('uploads/'+ uid + "/" + item.diaryId);
+            if(item.file != null) {
+                let storageChildRef = storageRef.child("/"+ item.file);
+                let url = await storageChildRef.getDownloadURL().then(url=>{
+                    return url;
+                });
+                filelist[index] = url;
+            }else {
+                filelist[index] = null;
+            }
+        })
+        store.commit('set_images', filelist);
+    }
+    returnImages();
 }
 
 export {    
@@ -127,5 +144,6 @@ export {
     fetchDiary,
     deleteDiary,
     imageDelete,
-    imageDownload
+    imageDownload,
+    imagesDownload
 }

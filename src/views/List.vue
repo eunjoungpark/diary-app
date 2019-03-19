@@ -6,8 +6,11 @@
     <!--// list -->
     <div class="list-bx" v-loading="loading" element-loading-text="Loading..."  element-loading-spinner="el-icon-loading">
         <ul v-if="diaries != null">
-          <li v-for = "(diary, key, index) in diaries" :key="index" :id="key" class="list-cell clear">          
-            <p class="list-img"><img src="" alt="default" /></p>
+          <li v-for = "(diary, key, index) in diaryData" :key="index" :id="key" class="list-cell clear">
+            <p class="list-img">
+              <!-- <template v-if="listFileList[index] != null"><img :src="listFileList[index]" alt="index" /></template> -->
+              <!-- <template v-else><span class="no-img">no image</span></template> -->
+            </p>
             <div class="list-cont">
               <dl>
                 <dt class="tit"><a href="#" @click="toView(key)">{{diary.title}}</a></dt>
@@ -32,7 +35,10 @@
 export default {
   data(){
     return {
-      loading: true
+      loading: true,
+      fileLen : 0,
+      diaryData : null,
+      files : this.$store.getters.listFileList
     }
   },
   created (){
@@ -42,10 +48,13 @@ export default {
     diaries (){
       if(this.$store.getters.diaries != null){
         this.loading = false;
+        this.diaryData = {...this.$store.getters.diaries};
+        console.log(this.files);
         return this.$store.getters.diaries;
-      }else {
-        setTimeout(()=>{this.loading = false;},500);
       }
+    },
+    listFileList(){
+      return this.$store.getters.listFileList;
     }
   },
   methods:{

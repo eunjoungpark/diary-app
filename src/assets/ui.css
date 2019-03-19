@@ -54,7 +54,7 @@ a:focus {color:#d7604e;}
 
 /* Layout 
 -------------------------------------------------------------------------- */
-#app {width:600px; margin:0 auto;}
+#app {max-width:600px; margin:0 auto;}
 #wrapper {position:relative; padding-top:60px;}
 #slot-wrap {border:1px solid #a8a8a8; border-top:0;}
 #container {position:relative; padding-left:40px;}
@@ -115,8 +115,9 @@ a:focus {color:#d7604e;}
 /* list */
 .list-bx {min-height:200px;}
 .list-bx .list-cell {margin-bottom:10px; border:1px solid #a8a8a8;}
-.list-bx .list-img {float:left;}
+.list-bx .list-img {position:relative; float:left; width:130px; height:130px; background-color:#ededed;}
 .list-bx .list-img img {display:block; width:130px; height:130px;}
+.list-bx .list-img .no-img {display:block; text-align:center; padding:50px 0; color:#9f9f9f;}
 .list-bx .list-cont {position:relative; padding:20px 50px 20px 150px;}
 .list-bx .list-cont .tit {margin-bottom:10px;}
 .list-bx .list-cont .tit a {display:block; font-weight:bold; color:#000; font-size:21px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
@@ -141,10 +142,11 @@ a:focus {color:#d7604e;}
 .view-bx .view-cont {padding:20px; line-height:1.8;}
 .view-bx .view-cont .text {white-space:pre;}
 .view-bx .view-cont .map {margin-top:50px;}
-.view-bx .view-cont .carousel-bx {margin-bottom:50px;}
-.view-bx .view-cont .carousel-bx img {width:100%;}
+.view-bx .view-cont .carousel-bx {margin-bottom:50px; text-align:center;}
+.view-bx .view-cont .carousel-bx img {height:300px;}
 
-/* element.io style */
+/* write-wrap
+-------------------------------------------------------------------------- */
 .write-bx .el-radio {margin-right:20px; text-align:center; white-space:normal;}
 .write-bx .el-radio__input {position:absolute; left:0; opacity:0;}
 .write-bx .el-radio__label {padding:0;}
