@@ -48,7 +48,7 @@
                             <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
                             <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
                             <ul class="file-list">          
-                                <li v-for="(file, index) in savelist" :key="index">{{file}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
+                                <li v-for="(file, index) in savelist" :key="index">{{file.name}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
                                 <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>                               
                             </ul>
                         </div>

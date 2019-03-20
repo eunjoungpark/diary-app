@@ -7,26 +7,20 @@ const storage = firebase.storage();
 const writeDiary = (uid, files, formData) => {
     let diaryId = {};
     diaryId = database.ref().child('diary').push().key;
-    if(files.length > 0) {
-        const imageUrl = async() => {
-            formData.filelist = await imageUpload(uid, diaryId, files);
-        }
-        imageUrl();
+    const imageUrl = async() => {
+        formData.filelist = await imageUpload(uid, diaryId, files);         
+        database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
     }
-    let updates = {};
-    updates['/diary/' + uid + '/' + diaryId] = formData;
-    return database.ref().update(updates);
+    imageUrl();
 };
 
 //글수정
 const updateDiary = (uid, diaryId, files, formData) => {
-    if(files.length > 0) {
-        const imageUrl = async() => {
-            formData.filelist = await imageUpload(uid, diaryId, files);
-        }
-        imageUrl();
+    const imageUrl = async() => {
+        formData.filelist = await imageUpload(uid, diaryId, files);         
+        database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
     }
-    database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
+    imageUrl();
 };
 
 //글삭제
@@ -90,15 +84,20 @@ const imageUpload = (uid, diaryId, files) => {
 }
 const getFilelist = (files, storageRef)=>{
     return new Promise(resolve=>{
-        let filelist = [];        
-        files.forEach(async(file)=>{
-            let filename = file.name;
-            let storageChildRef = storageRef.child(filename);
-            var taskImg = storageChildRef.put(file);
-            let url = await uploadSuccess(taskImg, storageChildRef);
-            filelist.push({name:file.name, url:url});
-        });
-        resolve(filelist);   
+        let filelist = [];
+        let fileLen = files.length;
+        const forEachFunc = async()=>{      
+            await files.forEach(async(file, index)=>{
+                let filename = file.name;
+                let storageChildRef = storageRef.child(filename);
+                var taskImg = storageChildRef.put(file);
+                let url = await uploadSuccess(taskImg, storageChildRef);
+                filelist.push({name:file.name, url:url});
+                if(fileLen != (index + 1)) return;
+                resolve(filelist);
+            });           
+        }
+        forEachFunc();
     })
 }
 
