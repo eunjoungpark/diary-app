@@ -98,7 +98,7 @@ const getFilelist = (files, storageRef)=>{
             let url = await uploadSuccess(taskImg, storageChildRef);
             filelist.push({name:file.name, url:url});
         });
-        resolve(filelist);
+        resolve(filelist);   
     })
 }
 
