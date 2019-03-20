@@ -7,7 +7,6 @@
         <router-link tag="li" to="/login" v-if="!user"><a>Login</a></router-link>
         <template v-else>
           <li>{{user}}</li>
-          <li><a href="#" @click.prevent="logout()">logout</a></li>
         </template>
       </ul>
     </div>
@@ -28,11 +27,6 @@ export default {
   computed : {
     user(){
       return this.$store.getters.user;
-    }
-  },
-  methods : {
-    logout(){
-      this.$store.dispatch('logout');
     }
   }
 }

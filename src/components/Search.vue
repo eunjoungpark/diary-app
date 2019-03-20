@@ -3,7 +3,7 @@
         <fieldset>
             <legend>다이어리 검색</legend>
             <input type="text" />
-            <button type="button" class="search"><i class="el-icon-search"></i></button>
+            <button type="button" class="btnSearch"><i class="el-icon-search"></i></button>
         </fieldset>
     </div>
 </template>

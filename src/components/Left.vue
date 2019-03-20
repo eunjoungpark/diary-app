@@ -3,7 +3,11 @@
         <h2 class="skip">왼쪽 메뉴</h2>
         <ul>
             <router-link tag="li" class="nav-icon01" to="/login" v-if="user==null"><a><icon name="user-alt" scale="1.2" /> <span class="nav-label">Login</span></a></router-link>
-            <li class="nav-icon02" v-else><a href="#" @click.prevent="toWrite()"><icon name="edit" scale="1.2" /> <span class="nav-label">Add Diary</span></a></li>
+            <template v-else>
+                <li class="nav-icon02" ><a href="#" @click.prevent="toWrite()"><icon name="edit" scale="1.2" /> <span class="nav-label">Add Diary</span></a></li>
+                <li class="nav-icon02"><a href="#" @click.prevent="logout()"><icon name="sign-out-alt" scale="1.2" /> <span class="nav-label">logout</span></a></li>
+            </template>
+            <router-link tag="li" class="nav-icon02" to="/leave"><a><icon name="user-minus" scale="1.2" /> <span class="nav-label">leave</span></a></router-link>
         </ul>        
     </nav>
 </template>
@@ -30,6 +34,9 @@ export default {
                     onClose : this.$router.push('/login')
                 });
             }
+        },
+        logout(){
+            this.$store.dispatch('logout');
         }
     }
 }

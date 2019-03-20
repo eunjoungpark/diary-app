@@ -73,9 +73,10 @@ a:focus {color:#d7604e;}
 .logo img + span {font-size:18px;}
 .logo img + span + span {font-size:16px;}
 .logo img + span + span + span {font-size:14px;}
-.search-bx {float:left; margin-top:13px; width:250px; padding-left:10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
-.search-bx input[type="text"] {width:200px; padding:0 15px; margin-right:10px; background-color:transparent; border:0; font-size:15px;}
-.search-bx .search i {font-size:20px; color:#ccc;}
+.search-bx {position:relative; float:left; margin-top:13px; width:40%; padding:0 35px 0 10px; border-radius:15px; background-color:#fff; border:1px solid #ededed;}
+.search-bx input[type="text"] {width:100%; padding:0 15px; background-color:transparent; border:0; font-size:15px;}
+.search-bx .btnSearch {position:absolute; top:0; right:0; width:30px; height:30px;}
+.search-bx .btnSearch i {font-size:20px; color:#ccc;}
 .top-menu {float:right;}
 .top-menu li {float:left; padding:16px 0; font-size:14px; font-weight:bold; color:#fff; font-family:'Pacifico';}
 .top-menu li a {display:block; padding:0 5px; }

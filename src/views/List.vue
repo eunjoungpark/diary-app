@@ -8,8 +8,8 @@
         <ul v-if="diaries != null">
           <li v-for = "(diary, key, index) in diaries" :key="index" :id="key" class="list-cell clear">
             <p class="list-img">
-              <!-- <template v-if="listFileList[index] != null"><img :src="listFileList[index]" alt="index" /></template> -->
-              <!-- <template v-else><span class="no-img">no image</span></template> -->
+              <template v-if="diary.filelist.length != 0"><img :src="diary.filelist[0].url" :alt="'이미지' + index" /></template> 
+              <template v-else><span class="no-img">no image</span></template>
             </p>
             <div class="list-cont">
               <dl>
@@ -19,7 +19,7 @@
               </dl>
               <div class="list-func">
                 <router-link :to="'/modify/'+ key" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></router-link>
-                <a href="#" @click="deleteDiary(key)" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
+                <a href="#" @click="deleteDiary(key, diary.filelist)" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
               </div>
             </div>
           </li>
@@ -35,10 +35,9 @@
 export default {
   data(){
     return {
-      loading: true,
+      loading: false,
       fileLen : 0,
       diaryData : null,
-      // files : this.$store.getters.listFileList
     }
   },
   created (){
@@ -46,15 +45,12 @@ export default {
   },
   computed : {
     diaries (){
+      this.loading = true;
       if(this.$store.getters.diaries != null){
         this.loading = false;
-        // this.diaryData = {...this.$store.getters.diaries};
-        // console.log(this.files);
         return this.$store.getters.diaries;
       }
-    },
-    listFileList(){
-      // return this.$store.getters.listFileList;
+      this.loading = false;
     }
   },
   methods:{
@@ -74,28 +70,14 @@ export default {
       this.$store.dispatch('get_diary', this.$store.getters.user[diaryId]);
       this.$router.push('/view/' + diaryId);
     },
-    deleteDiary(diaryId){
+    deleteDiary(diaryId, filelist){
       this.$message({
           message : '삭제되었습니다.',
           type : 'error',
           duration : 1000,
-          onClose : this.$store.dispatch('delete_diary', diaryId)
+          onClose : this.$store.dispatch('delete_diary', {diaryId, filelist})
       });
     }
   }
 }
-// const waitFor = (ms) => new Promise(r => setTimeout(r('success'), ms));
-// async function asyncForEach(array, callback) {
-//   for (let index = 0; index < array.length; index++) {
-//     await callback(array[index], index, array);
-//   }
-// }
-// const start = async () => {
-//   await asyncForEach([1, 2, 3], async (num) => {
-//     let result = await waitFor(7000);
-//     console.log(result);
-//   });
-//   console.log('Done');
-// }
-// start();
 </script>

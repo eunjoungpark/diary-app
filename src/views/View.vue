@@ -11,15 +11,15 @@
                         <p class="weather" v-if="diary.weather !=''"><icon :name="diary.weather" scale="1.3" :class="diary.weather" /></p>
                         <div class="view-func">
                             <router-link :to="'/modify/'+$route.params.id" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></router-link>
-                            <a href="#" @click="deleteDiary()" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
+                            <a href="#" @click="deleteDiary(diary.filelist)" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
                         </div>
                     </div>
                 </div>
                 <div class="view-cont">
                     <!--// 사진첩 -->
-                    <el-carousel :interval="5000" arrow="always" class="carousel-bx" v-if="viewFileList != 0">
-                        <el-carousel-item v-for="(item,index) in viewFileList" :key="index">
-                            <div><img :src="item" :alt="'이미지' + item" /> </div>
+                    <el-carousel :interval="5000" arrow="always" class="carousel-bx" v-if="diary.filelist.length != 0">
+                        <el-carousel-item v-for="(item, index) in diary.filelist" :key="index">
+                            <div><img :src="item.url" :alt="'이미지' + index" /> </div>
                         </el-carousel-item>
                     </el-carousel>
                     <!-- 사진첩 //-->
@@ -57,29 +57,16 @@ export default {
     },
     computed : {
         diary (){
-            if(this.$store.getters.diary != null){
-                let diary = this.$store.getters.diary;
-                if(Object.keys(diary).filter(item=>{return item == 'filelist'}).length > 0){
-                    this.$store.dispatch('download_image', {diaryId:this.$route.params.id, files: diary['filelist']});
-                    this.hasFiles = true;
-                }
-                return this.$store.getters.diary;
-            }
-        },
-        viewFileList(){
-            if(this.$store.getters.viewFileList.length != 0){
-                return this.$store.getters.viewFileList;
-            }
-            return 0;
+            return this.$store.getters.diary;
         }
     },
     methods : {
-        deleteDiary(){
+        deleteDiary(filelist){
             this.$message({
                 message : '삭제되었습니다.',
                 type : 'error',
                 duration : 1000,
-                onClose : this.$store.dispatch('delete_diary', this.$route.params.id)
+                onClose : this.$store.dispatch('delete_diary', {diaryId:this.$route.params.id, filelist})
             });
         }
     }

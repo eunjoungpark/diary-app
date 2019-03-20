@@ -85,11 +85,34 @@ const loginSuccess = () => {
     });
 }
 
+//leave
+const letMeGo = (userData)=>{
+    console.log(userData);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(()=>{
+        firebase.auth().signInWithEmailAndPassword(userData.userEmail, userData.userPasswd).then(()=>{
+            var user = firebase.auth().currentUser;
+            var credential;
+            user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+                console.log("success");
+            }).catch(function(error) {
+                console.log(error);
+            });
+        }).catch(function(error) {
+            vm.$message({
+                message : "이메일 또는 비밀번호가 유효하지 않습니다.",
+                type : 'error',
+                duration : 1500,
+            });
+        });
+    });
+}
+
 
 export {
     firebaseGoogleLogin,
     firebaseFacebookLogin,
     firebaseLogin,
     firebaseSignup,    
-    firebaseLogout
+    firebaseLogout,
+    letMeGo
 }

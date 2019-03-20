@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from './router'
 import _ from 'lodash'
-import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout} from './rest/auth'
-import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageDelete, imageDownload, imagesDownload} from './rest/database'
+import {firebaseGoogleLogin, firebaseFacebookLogin, firebaseLogin, firebaseSignup, firebaseLogout, letMeGo} from './rest/auth'
+import {writeDiary, updateDiary, fetchDiaries, fetchDiary, deleteDiary, imageDelete} from './rest/database'
 Vue.use(Vuex);
 Vue.use(_);
 
@@ -14,9 +14,7 @@ export default new Vuex.Store({
     user : null,
     uid : null,
     diaries : [],
-    diary : null,
-    viewFileList : [],
-    listFileList : []
+    diary : null
   },
   mutations: {
     set_user(state, user){
@@ -80,7 +78,7 @@ export default new Vuex.Store({
       router.push({name:'view', params : {id : updateData.diaryId}});
     },
     delete_diary ({state}, updateData){
-      deleteDiary(state.uid, updateData);
+      deleteDiary(state.uid, updateData.diaryId, updateData.filelist);
       router.push('/');
     },
     fetch_diaries({dispatch}){ //For List : get diaries step1
@@ -104,7 +102,6 @@ export default new Vuex.Store({
     get_diaries({commit, dispatch, state},diaries){ //For List : get diaries step2
       if(diaries !== null){
         commit('set_diaries', diaries);
-        dispatch('get_images', diaries);
       }else {
         commit('set_diaries', null);
       }
@@ -116,26 +113,11 @@ export default new Vuex.Store({
         commit('set_diary', null);
       }
     },
-    get_images({dispatch},diaries){
-      let files = []
-      Object.keys(diaries).forEach(item=>{
-        diaries[item].thumnail = null;
-          if(Object.keys(diaries[item]).filter(file=>{return file == 'filelist'}).length > 0){
-            files.push({diaryId : item, file : diaries[item]['filelist'][0]});
-          }else {
-            files.push({diaryId : item, file : null});
-          }
-      });
-      dispatch('download_images', files);
-    },
     delete_image({state}, formData){
       imageDelete(state.uid, formData.diaryId, formData.filename, formData.diary);
     },
-    download_image ({state}, imageData){
-      state.viewFileList = imageDownload(state.uid, imageData.diaryId, imageData.files);
-    },
-    download_images ({state}, files){
-      imagesDownload(state.uid, files);
+    leave({state},userData){
+      letMeGo(userData);
     }
   },
   getters : {
@@ -150,14 +132,6 @@ export default new Vuex.Store({
     },
     diary (state){
       return state.diary
-    },
-    viewFileList (state){
-      return state.viewFileList;
-    },
-    listFileList (state){
-      if(state.listFileList.length != 0){
-        return state.listFileList;
-      }
     }
   }
 })

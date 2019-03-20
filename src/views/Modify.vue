@@ -48,8 +48,8 @@
                             <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
                             <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
                             <ul class="file-list">          
-                                <li v-for="(file, index) in savelist" :key="index">{{file.name}}<button type="button" @click="deleteDirectImage(file, index)"><icon name="trash" scale="0.9" /></button></li>
-                                <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>                               
+                                <li v-for="(file, index) in savelist" :key="index">{{file.name}}<button type="button" @click="deleteDirectImage(file.name, index)"><icon name="trash" scale="0.9" /></button></li>
+                                <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file.name}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>                               
                             </ul>
                         </div>
                     </div>
@@ -181,7 +181,7 @@ export default {
         //image files
         uploadImage(e){
             let file = e.target.files[0];
-            let result = this.form.filelist.filter((item)=>{return item == file.name}).length + this.savelist.filter((item)=>{return item == file.name}).length;
+            let result = this.form.filelist.filter((item)=>{return item.name == file.name}).length + this.savelist.filter((item)=>{return item.name == file.name}).length;
             e.target.value = "";
 
             if(this.form.filelist.length >= 5){
@@ -193,7 +193,7 @@ export default {
                 return;
             }
             this.overlap = false;
-            this.form.filelist.push(file.name);
+            this.form.filelist.push(file);
             this.fullPathFiles.push(file);
         },
         //map
@@ -238,7 +238,7 @@ export default {
             if(this.$v.form.title.required && this.$v.form.desc.required && this.$v.form.evtDate.required){
                 const diary = this.form;
                 diary.writeDate = new Date();
-                diary.filelist = [...this.savelist, ...this.form.filelist];
+                diary.filelist = this.savelist;
                 this.$message({
                     message : '수정되었습니다.',
                     type : 'success',
