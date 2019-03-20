@@ -5,26 +5,29 @@ const storage = firebase.storage();
 
 //글작성
 const writeDiary = (uid, files, formData) => {
-    let diaryId = {};
-    diaryId = database.ref().child('diary').push().key;
-    if(files.length > 0) {
-        const imageUrl = async() => {
-            formData.filelist = await imageUpload(uid, diaryId, files);
-        }
-        imageUrl();
-    }
+    let newDiaryKey = {};
     let updates = {};
-    updates['/diary/' + uid + '/' + diaryId] = formData;
-    return database.ref().update(updates);
+    newDiaryKey = database.ref().child('diary').push().key;
+    new Promise(resolve=>{
+        if(files.length > 0) {
+            const imageUrl = async() => {
+                let filelist = await imageUpload(uid, newDiaryKey, files);
+                formData.filelist = {...filelist};
+            }
+            imageUrl();
+        }
+        console.log(formData);
+        resolve(formData);
+        console.log("???");
+    });
+    updates['/diary/' + uid + '/' + newDiaryKey] = formData;
+    // return database.ref().update(updates);
 };
 
 //글수정
 const updateDiary = (uid, diaryId, files, formData) => {
     if(files.length > 0) {
-        const imageUrl = async() => {
-            formData.filelist = await imageUpload(uid, diaryId, files);
-        }
-        imageUrl();
+        imageUpload(uid, diaryId, files);
     }
     database.ref().child('diary/' + uid + "/" + diaryId).set(formData);
 };
