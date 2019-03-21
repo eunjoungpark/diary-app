@@ -1,6 +1,7 @@
 <template>
     <section class="login-container">
         <div class="login-bx">
+            <h3>회원 탈퇴</h3>
             <form @submit.prevent="auth">
                 <fieldset>
                     <legend>회원탈퇴</legend>
@@ -15,6 +16,8 @@
                         <el-alert title="비밀번호는 6~12자 이상의 대소문자(특수문자 !@#$%^ 허용)와 2자이상의 숫자로 입력해주세요." type="error" v-if="!passwdRegexBool"></el-alert>
                     </div>
                     <div class="btn-bx"><button type="submit" class="btn-login">Authentication</button></div>
+                    <div class="btn-bx"><button type="button" class="btn-google" @click="googleLeave()"><icon name="brands/google"></icon>Log in width Google</button></div>
+                    <div class="btn-bx"><button type="button" class="btn-facebook" @click="facebookLeave()"><icon name="brands/facebook"></icon>Log in width Facebook</button></div>
                 </fieldset>
             </form>
         </div>
@@ -73,6 +76,12 @@ export default {
             if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex){
                 this.$store.dispatch('leave', {userEmail:this.userEmail, userPasswd:this.userPasswd});
             }
+        },
+        googleLeave(){
+            this.$store.dispatch('googleLeave');
+        },
+        facebookLeave(){
+            this.$store.dispatch('facebookLeave');
         }
     }
 }

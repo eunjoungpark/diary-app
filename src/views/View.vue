@@ -11,13 +11,14 @@
                         <p class="weather" v-if="diary.weather !=''"><icon :name="diary.weather" scale="1.3" :class="diary.weather" /></p>
                         <div class="view-func">
                             <router-link :to="'/modify/'+$route.params.id" class="btn-ico"><icon name="pen" scale="0.8" /> <span class="skip">수정</span></router-link>
-                            <a href="#" @click="deleteDiary(diary.filelist)" class="btn-ico"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>
+                            <a href="#" @click="deleteDiary(diary.filelist)" class="btn-ico" v-if="Object.keys(diary).indexOf('filelist') > -1"><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>                            
+                            <a href="#" @click="deleteDiary()" class="btn-ico" v-else><icon name="trash-alt" scale="0.8" /> <span class="skip">삭제</span></a>                            
                         </div>
                     </div>
                 </div>
                 <div class="view-cont">
                     <!--// 사진첩 -->
-                    <el-carousel :interval="5000" arrow="always" class="carousel-bx" v-if="diary.filelist.length != 0">
+                    <el-carousel :interval="5000" arrow="always" class="carousel-bx" v-if="Object.keys(diary).indexOf('filelist') > -1">
                         <el-carousel-item v-for="(item, index) in diary.filelist" :key="index">
                             <div><img :src="item.url" :alt="'이미지' + index" /> </div>
                         </el-carousel-item>
@@ -66,6 +67,7 @@ export default {
                 message : '삭제되었습니다.',
                 type : 'error',
                 duration : 1000,
+                center : true,
                 onClose : this.$store.dispatch('delete_diary', {diaryId:this.$route.params.id, filelist})
             });
         }

@@ -1,6 +1,7 @@
 <template>
     <section class="login-container">
         <div class="login-bx">
+            <h3>회원 가입</h3>
             <fieldset>
                 <legend>로그인 입력폼</legend>
                 <div class="input-bx">                    

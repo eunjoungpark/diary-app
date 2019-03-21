@@ -33,15 +33,16 @@ export default new Vuex.Store({
   },
   actions: {
     login({dispatch}, userData){ //Base Login
+      userData.state = 'login';
       firebaseLogin(userData);
       dispatch('get_user');
     },
-    googleLogin({commit,dispatch}){ //Google Login
-      firebaseGoogleLogin();
+    googleLogin({dispatch}){ //Google Login
+      firebaseGoogleLogin('login');
       dispatch('get_user');
     },
     facebookLogin({dispatch}){ //Facebook Login
-      firebaseFacebookLogin();
+      firebaseFacebookLogin('login');
       dispatch('get_user');
     },
     signup({dispatch}, userData){ //SignUp
@@ -100,7 +101,7 @@ export default new Vuex.Store({
       });
     },    
     get_diaries({commit, dispatch, state},diaries){ //For List : get diaries step2
-      if(diaries !== null){
+      if(diaries != null){
         commit('set_diaries', diaries);
       }else {
         commit('set_diaries', null);
@@ -116,8 +117,15 @@ export default new Vuex.Store({
     delete_image({state}, formData){
       imageDelete(state.uid, formData.diaryId, formData.filename, formData.diary);
     },
-    leave({state},userData){
-      letMeGo(userData);
+    leave({dispatch},userData){
+      userData.state = 'leave';
+      firebaseLogin(userData);
+    },
+    googleLeave({dispatch}){
+      firebaseGoogleLogin('leave');
+    },
+    facebookLeave({dispatch}){ //Facebook Login
+      firebaseFacebookLogin('leave');
     }
   },
   getters : {

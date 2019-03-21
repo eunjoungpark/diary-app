@@ -1,6 +1,7 @@
 <template>
     <section class="login-container">
         <div class="login-bx">
+            <h3>로그인</h3>
             <form @submit.prevent="userLogin()">
                 <fieldset>
                     <legend>로그인 입력폼</legend>

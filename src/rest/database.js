@@ -26,12 +26,11 @@ const updateDiary = (uid, diaryId, files, formData) => {
 //delete a diary
 const deleteDiary = (uid, diaryId, filelist) => {
     database.ref().child('diary/' + uid + "/" + diaryId).remove();
-    let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId);
-    if(filelist.length != 0){
+    if(filelist != undefined){
+        if(filelist.length == 0) return;
         filelist.forEach(item=>{
-            let storageChildRef = storageRef.child(item.name);
-            storageChildRef.delete();
-            
+            let storageRef = storage.ref('uploads/'+ uid + "/" + diaryId + '/' + item.name);
+            storageRef.delete();            
         })
     }
  };
@@ -42,7 +41,7 @@ const fetchDiaries = (uid) =>{
         return;
     }
     const diariesDB = database.ref().child('diary/' + uid);
-    diariesDB.on("value", snap=>{      
+    diariesDB.on("value", snap=>{
         store.dispatch('get_diaries', snap.val());
     });
 };

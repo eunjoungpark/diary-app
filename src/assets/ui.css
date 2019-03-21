@@ -60,8 +60,8 @@ a:focus {color:#d7604e;}
 #container {position:relative; padding-left:40px;}
 .contents-wrap {min-height:200px; padding:20px;}
 #header {position:absolute; top:0; left:0; right:0; height:60px; padding:0 10px; background-color:#d77869;}
-#nav {position:absolute; top:0; left:0; width:40px; height:100%; padding:20px 0 20px 7px; overflow:hidden; background-color:#666666;}
-
+#nav {position:absolute; top:0; left:0; width:40px; height:100%; padding:20px 0 20px 5px; background-color:#666666;}
+h3 {text-align:center; font-size:24px; margin-bottom:20px;}
 
 /* header 
 -------------------------------------------------------------------------- */
@@ -83,11 +83,11 @@ a:focus {color:#d7604e;}
 
 /* nav 
 -------------------------------------------------------------------------- */
-#nav ul {width:130px;}
-#nav ul li {position:relative; height:35px; margin-bottom:10px;}
-#nav ul li a {position:absolute; left:0; top:0; padding:5px; color:#fff; line-height:1; z-index:10;}
+#nav ul li {margin-bottom:10px;}
+#nav ul li a {position:relative; display:block; padding:5px; color:#fff; line-height:1; z-index:10; overflow:hidden;}
+#nav ul li a:hover {overflow:visible;}
 #nav ul li a svg {margin-right:13px; vertical-align:middle;}
-#nav ul li a .nav-label {vertical-align:middle;}
+#nav ul li a .nav-label {position:absolute; top:0; left:42px; padding:5px; vertical-align:middle; color:#333; border:1px solid #666; border-radius:5px; background-color:#fff;}
 /* #nav ul li a:hover::before {position:absolute; left:-10px; top:13px; content:""; border-left:5px solid #fff; border-top:4px solid transparent; border-bottom:4px solid transparent;} */
 #nav .nav-icon01.on a {color:#32ca44;}
 
@@ -98,7 +98,8 @@ a:focus {color:#d7604e;}
 /* login & join
 -------------------------------------------------------------------------- */
 .login-container {width:100%; padding:30px 0 50px 0;}
-.login-bx {width:400px; padding:50px; margin:0 auto; border:1px solid #e5e5e5;}
+.login-bx {max-width:400px; padding:20px 0 50px; margin:0 auto; border:1px solid #e5e5e5;}
+.login-bx fieldset {max-width:330px; margin:0 auto; padding:0 15px;}
 .login-bx .input-bx {margin-bottom:10px;}
 .etc-bx {text-align:right;}
 .etc-bx a {color:#52adf3; text-decoration:underline;}
@@ -114,7 +115,8 @@ a:focus {color:#d7604e;}
 .no-data button {display:block; width:100%; padding:40px; color:#9d9d9d; font-size:16px; border:1px dashed #a8a8a8; border-radius:10px; box-sizing:border-box;}
 
 /* list */
-.list-bx {min-height:200px;}
+.list-bx {}
+.list-bx .list {min-height:140px;}
 .list-bx .list-cell {margin-bottom:10px; border:1px solid #a8a8a8;}
 .list-bx .list-img {position:relative; float:left; width:130px; height:130px; background-color:#ededed;}
 .list-bx .list-img img {display:block; width:130px; height:130px;}
@@ -164,5 +166,6 @@ a:focus {color:#d7604e;}
 /* .vue-map-container */
 .vue-map-container {width:478px; height:300px;}
 
+/* mobile */
 
 
