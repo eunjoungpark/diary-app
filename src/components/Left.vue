@@ -35,7 +35,7 @@ export default {
                 });
             }
         },
-        logout(){
+        logout(){          
             this.$store.dispatch('logout');
         }
     }
