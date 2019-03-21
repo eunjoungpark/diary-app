@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Contents from './views/Contents.vue';
 import Login from './views/Login.vue'
+import Leave from './views/Leave.vue'
 import Signup from './views/Signup.vue'
 import List from './views/List.vue'
 import View from './views/View.vue'
@@ -29,6 +30,9 @@ export default new Router({
     {
       path:'/login',
       component : Login,
+    },{
+      path:'/leave',
+      component : Leave,
     },
     {
       path:'/signup',
