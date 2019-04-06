@@ -32,7 +32,7 @@
 // return false;
 // }
 import {required, email, helpers} from 'vuelidate/lib/validators'
-const passwdRegex = (value) => /^[a-zA-Z]{6,12}.[!,@,#,$,%,^,&]{0,}.[0-9\d]{1,}$/.test(value);
+const passwdRegex = (value) => /^[a-zA-Z]{6,}.[!,@,#,$,%,^,&]{0,}.[0-9\d]{1,}$/.test(value);
 
 export default {
     data(){
@@ -81,6 +81,7 @@ export default {
         userLogin (){
             if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex){
                 this.$store.dispatch('login', {userEmail:this.userEmail, userPasswd:this.userPasswd});
+                this.$router.push('/');
             }
         },
         googleLogin(){

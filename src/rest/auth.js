@@ -56,7 +56,6 @@ const firebaseLogin = (userData) => {
         auth.signInWithEmailAndPassword(userData.userEmail, userData.userPasswd).then(()=>{
             if(userData.state == 'login'){
                 loginSuccess();
-                router.replace('/');
             }else if(userData.state == 'leave'){
                 letMeGo();
             }
@@ -67,6 +66,7 @@ const firebaseLogin = (userData) => {
                 center : true,
                 duration : 1500,
             });
+            router.push("/login");
         });
     });
 };
@@ -83,6 +83,7 @@ const firebaseSignup = (userData) => {
         });
     }).catch(function(error) {
         console.log(error.code);
+        router.redirect('/signup')
     });
 };
 

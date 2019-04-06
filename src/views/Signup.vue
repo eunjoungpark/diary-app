@@ -1,6 +1,6 @@
 <template>
     <section class="login-container">
-        <div class="login-bx">
+        <div class="login-bx" v-loading="loading" element-loading-text="Loading..." element-loading-spinner="el-icon-loading">
             <h3>회원 가입</h3>
             <fieldset>
                 <legend>로그인 입력폼</legend>
@@ -35,7 +35,8 @@ export default {
             userRepasswd : "",
             emailRequire : true,
             passwordRequire : true,
-            passwdRegexBool : true
+            passwdRegexBool : true,
+            loading : false
         }
     },
     validations : {
@@ -78,6 +79,7 @@ export default {
         userSignup (){
             if(this.$v.userEmail.required && this.$v.userEmail.email && this.$v.userPasswd.required && this.$v.userPasswd.passwdRegex && this.$v.userRepasswd.sameAsPassword){
                 this.$store.dispatch('signup', {userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
+                this.loading = true;
                 //console.log({userEmail:this.userEmail, userPasswd:this.userPasswd, userRepasswd:this.userRepasswd});
             }
         }
