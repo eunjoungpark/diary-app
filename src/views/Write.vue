@@ -46,7 +46,7 @@
                             <div tabindex="0" class="el-input">
                                 <input type="file" name="이미지" class="el-input__inner" @change="uploadImage">
                             </div>
-                            <div class="el-upload__tip">200kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
+                            <div class="el-upload__tip">200kb이하 이미지(gif/jpg/png) 업로드 (최대 5개)</div>
                             <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
                             <el-alert title="200kb를 초과하였습니다." type="error" v-if="imgSize"></el-alert>
                             <el-alert title="이미지형식만 업로드할 수 있습니다." type="error" v-if="imgType"></el-alert>

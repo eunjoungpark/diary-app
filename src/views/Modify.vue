@@ -45,8 +45,10 @@
                             <div tabindex="0" class="el-input">
                                 <input type="file" name="이미지" class="el-input__inner" @change="uploadImage">
                             </div>
-                            <div class="el-upload__tip">300kb이하의 gif/jpg/png 파일만 업로드 가능 (최대 5개)</div>
+                            <div class="el-upload__tip">200kb이하 이미지(gif/jpg/png) 업로드 (최대 5개)</div>
                             <el-alert title="이미지명이 중복됩니다." type="error" v-if="overlap"></el-alert>
+                            <el-alert title="200kb를 초과하였습니다." type="error" v-if="imgSize"></el-alert>
+                            <el-alert title="이미지형식만 업로드할 수 있습니다." type="error" v-if="imgType"></el-alert>
                             <ul class="file-list">          
                                 <li v-for="(file, index) in savelist" :key="index">{{file.name}}<button type="button" @click="deleteDirectImage(file.name, index)"><icon name="trash" scale="0.9" /></button></li>
                                 <li v-for="(file, index) in form.filelist" :key="savelist.length + index">{{file.name}}<button type="button" @click="deleteImage(index)"><icon name="trash" scale="0.9" /></button></li>                               
@@ -100,6 +102,8 @@ export default {
             placeErr : false,
             fullPathFiles : [],
             overlap : false,
+            imgSize : false,
+            imgType : false,
             savelist : []
         }
     },
@@ -146,6 +150,10 @@ export default {
     },
     methods : {
         deleteImage (idx){
+            this.imgSize = false;
+            this.overlap = false;
+            this.imgType = false;
+
             this.form.filelist.splice(idx,1);
             this.fullPathFiles.splice(idx,1);
         },
@@ -183,6 +191,20 @@ export default {
             let file = e.target.files[0];
             let result = this.form.filelist.filter((item)=>{return item.name == file.name}).length + this.savelist.filter((item)=>{return item.name == file.name}).length;
             e.target.value = "";
+
+            this.imgSize = false;
+            this.overlap = false;
+            this.imgType = false;
+
+            if(!file.type.startsWith('image/')){
+                this.imgType = true;
+                return;
+            }
+
+            if(file.size >= 204800){
+                this.imgSize = true;
+                return;
+            }
 
             if(this.form.filelist.length >= 5){
                 return;
