@@ -1,6 +1,6 @@
 <template>
   <header id="header" class="clear">
-    <h1 class="logo"><router-link to="/" extact><img src="../assets/logo.png" alt="" /><sup>'s</sup> Diary</router-link></h1>
+    <h1 class="logo"><router-link to="/" extact><img src="../assets/logo.png" alt="" />'s Diary</router-link></h1>
     <appSearch></appSearch>
     <div class="top-menu">
       <ul>

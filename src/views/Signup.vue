@@ -12,7 +12,7 @@
                 <div class="input-bx">
                     <el-input placeholder="비밀번호 입력" id="user-password" type="password" autocomplete="off" v-model="userPasswd" @input="checkPasswd()"></el-input><label class="skip" for="user-password">password</label>
                     <el-alert title="필수입력 항목입니다." type="warning" v-if="!passwordRequire"></el-alert>
-                    <el-alert title="비밀번호는 6~12자 이상의 대소문자(특수문자 !@#$%^ 허용)와 2자이상의 숫자로 입력해주세요." type="error" v-if="!passwdRegexBool"></el-alert>
+                    <el-alert title="비밀번호는 6자 이상의 대소문자(특수문자 !@#$%^ 허용)와 2자이상의 숫자로 입력해주세요." type="error" v-if="!passwdRegexBool"></el-alert>
                 </div>
                 <div class="input-bx">
                     <el-input placeholder="비밀번호 재입력" id="user-repassword" type="password" autocomplete="off" v-model="userRepasswd"></el-input><label class="skip" for="user-repassword">password</label>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import {required, email, helpers, sameAs} from 'vuelidate/lib/validators'
-const passwdRegex = (value) => /^[a-zA-Z]{6,12}.[!,@,#,$,%,^,&]{0,}.[0-9\d]{1,}$/.test(value);
+const passwdRegex = (value) => /^[a-zA-Z]{6,}.[!,@,#,$,%,^,&]{0,}.[0-9\d]{1,}$/.test(value);
 
 export default {
     data(){
