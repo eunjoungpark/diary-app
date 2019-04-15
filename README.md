@@ -1,6 +1,3 @@
-# zzangsdiary
-s
-testtesttest
 ## Project setup
 ```
 npm install
